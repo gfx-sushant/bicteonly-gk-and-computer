@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BICTE Computer GK - 630 Practice Questions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #1a202c;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .app {
+            max-width: 1000px;
+            width: 100%;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+            padding: 30px;
+            margin: 10px 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 22px;
+            color: #2b6cb0;
+            font-weight: 700;
+        }
+        .header .badge {
+            background: #2b6cb0;
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .progress-text {
+            font-size: 15px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        .palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 25px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+        .palette-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            color: #4a5568;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .palette-btn:hover {
+            border-color: #2b6cb0;
+            transform: scale(1.05);
+        }
+        .palette-btn.answered {
+            background: #48bb78;
+            border-color: #48bb78;
+            color: #fff;
+        }
+        .palette-btn.review {
+            background: #ed8936;
+            border-color: #ed8936;
+            color: #fff;
+        }
+        .palette-btn.active {
+            border-color: #2b6cb0;
+            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.3);
+        }
+        .palette-legend {
+            display: flex;
+            gap: 18px;
+            margin-left: auto;
+            font-size: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .palette-legend span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .legend-dot.unanswered {
+            background: #fff;
+            border: 2px solid #e2e8f0;
+        }
+        .legend-dot.answered {
+            background: #48bb78;
+            border: 2px solid #48bb78;
+        }
+        .legend-dot.review {
+            background: #ed8936;
+            border: 2px solid #ed8936;
+        }
+        .question-card {
+            background: #f7fafc;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            min-height: 180px;
+        }
+        .q-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2b6cb0;
+            margin-bottom: 12px;
+        }
+        .q-text {
+            font-size: 17px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: #fff;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 15px;
+        }
+        .option:hover {
+            border-color: #2b6cb0;
+            background: #ebf4ff;
+        }
+        .option.selected {
+            border-color: #2b6cb0;
+            background: #bee3f8;
+        }
+        .option.correct {
+            border-color: #48bb78;
+            background: #c6f6d5;
+        }
+        .option.wrong {
+            border-color: #fc8181;
+            background: #fed7d7;
+        }
+        .option input[type="radio"] {
+            accent-color: #2b6cb0;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .option .label {
+            font-weight: 600;
+            color: #4a5568;
+            margin-right: 2px;
+        }
+        .feedback {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+        .feedback.show {
+            display: block;
+        }
+        .feedback.correct {
+            background: #c6f6d5;
+            color: #22543d;
+            border-left: 5px solid #48bb78;
+        }
+        .feedback.wrong {
+            background: #fed7d7;
+            color: #9b2c2c;
+            border-left: 5px solid #fc8181;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .nav .left {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #2b6cb0;
+            border: 2px solid #2b6cb0;
+        }
+        .btn-outline:hover {
+            background: #ebf4ff;
+        }
+        .btn-outline:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .btn-review {
+            background: #ed8936;
+            color: #fff;
+        }
+        .btn-review:hover {
+            background: #dd6b20;
+        }
+        .btn-review.active {
+            background: #9b2c2c;
+        }
+        .btn-success {
+            background: #38a169;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #2f855a;
+        }
+        .btn-danger {
+            background: #e53e3e;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #c53030;
+        }
+        .results {
+            display: none;
+            margin-top: 10px;
+        }
+        .results.show {
+            display: block;
+        }
+        .result-summary {
+            background: #ebf8ff;
+            border-radius: 16px;
+            padding: 24px 30px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .result-summary h2 {
+            font-size: 28px;
+            color: #2b6cb0;
+        }
+        .result-summary .score {
+            font-size: 48px;
+            font-weight: 800;
+            color: #2b6cb0;
+        }
+        .result-summary .sub {
+            font-size: 18px;
+            color: #4a5568;
+        }
+        .result-detail {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 8px;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item .qid {
+            font-weight: 600;
+            color: #4a5568;
+            min-width: 35px;
+        }
+        .result-item .status {
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+        }
+        .status.correct {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .status.wrong {
+            background: #fed7d7;
+            color: #9b2c2c;
+        }
+        .status.unanswered {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        .view-toggle {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .jump-input {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .jump-input input {
+            width: 50px;
+            padding: 4px 6px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .jump-input input:focus {
+            border-color: #2b6cb0;
+            outline: none;
+        }
+        @media (max-width: 700px) {
+            .app {
+                padding: 14px;
+            }
+            .header h1 {
+                font-size: 16px;
+            }
+            .q-text {
+                font-size: 15px;
+            }
+            .option {
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+            .palette-legend {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-start;
+                margin-top: 6px;
+            }
+            .nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .nav .left {
+                justify-content: center;
+            }
+            .btn {
+                padding: 6px 14px;
+                font-size: 12px;
+            }
+            .result-summary .score {
+                font-size: 34px;
+            }
+            .result-item {
+                font-size: 11px;
+            }
+            .palette-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app" id="app">
+        <div class="header">
+            <h1>💻 BICTE Computer GK</h1>
+            <div>
+                <span class="badge" id="modeBadge">Learning Mode</span>
+                <span class="progress-text" id="progressText">1 / 630</span>
+            </div>
+        </div>
+
+        <div class="palette" id="palette"></div>
+
+        <div class="question-card" id="questionCard">
+            <div class="q-number" id="qNumber">Q1.</div>
+            <div class="q-text" id="qText">Loading question...</div>
+            <div class="options" id="optionsContainer"></div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <div class="nav">
+            <div class="left">
+                <button class="btn btn-outline" id="prevBtn">◀ Prev</button>
+                <button class="btn btn-outline" id="nextBtn">Next ▶</button>
+                <button class="btn btn-review" id="reviewBtn">⭐ Review</button>
+                <div class="jump-input">
+                    <span style="font-size:13px;color:#4a5568;">Go to:</span>
+                    <input type="number" id="jumpInput" min="1" max="630" value="1" />
+                    <button class="btn btn-outline" id="jumpBtn" style="padding:4px 12px;">Go</button>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-success" id="submitBtn">✅ Submit</button>
+                <button class="btn btn-danger" id="resetBtn" style="display:none;">🔄 Reset</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="result-summary" id="resultSummary"></div>
+            <div class="view-toggle">
+                <button class="btn btn-outline" id="toggleDetailsBtn">📋 Show Details</button>
+            </div>
+            <div class="result-detail" id="resultDetail" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  DATA : 630 Computer GK Questions
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const questions = [];
+
+        // Helper to add questions
+        function addQ(id, q, opts, ans) {
+            questions.push({ id, q, opts, ans });
+        }
+
+        // ── Questions 1-630 from PDF ──
+        addQ(1, "What is the binary equivalent of the decimal number 11?", { a: "1010", b: "1011", c: "1100", d: "1101" },
+            "b");
+        addQ(2, "Which key is used to refresh a webpage?", { a: "F5", b: "F10", c: "F1", d: "F12" }, "a");
+        addQ(3, "Which key is used to move the cursor to the end of a line?", { a: "End", b: "Home", c: "F5", d: "F12" },
+            "a");
+        addQ(4, "What is the decimal equivalent of the binary number 1010?", { a: "10", b: "9", c: "11", d: "12" }, "a");
+        addQ(5, "What is the decimal equivalent of the binary number 1110?", { a: "13", b: "12", c: "15", d: "14" }, "d");
+        addQ(6, "Which of the following is an example of a web browser?", { a: "Adobe Reader", b: "Samsung Internet",
+                c: "WordPress", d: "Skype" }, "b");
+        addQ(7, "What is the binary equivalent of the decimal number 7?", { a: "111", b: "110", c: "101", d: "100" },
+            "a");
+        addQ(8, "What is the decimal equivalent of the binary number 1000?", { a: "9", b: "8", c: "7", d: "10" }, "b");
+        addQ(9, "Which protocol is used to translate domain names into IP addresses?", { a: "HTTP", b: "FTP", c: "DNS",
+                d: "SMTP" }, "c");
+        addQ(10, "Which shortcut key is used to print a document?", { a: "Ctrl + P", b: "Ctrl + S", c: "Ctrl + N",
+                d: "Ctrl + O" }, "a");
+        addQ(11, "Which of the following is a popular question-and-answer platform?", { a: "Quora", b: "LinkedIn",
+                c: "Instagram", d: "Pinterest" }, "a");
+        addQ(12, "Which of the following is a popular platform for streaming live sports?", { a: "ESPN app", b: "Reddit",
+                c: "Instagram", d: "Pinterest" }, "a");
+        addQ(13, "What is the binary equivalent of the decimal number 12?", { a: "1111", b: "1010", c: "1100",
+                d: "1001" }, "c");
+        addQ(14, "Which key opens the Downloads page in most web browsers?", { a: "F12", b: "F10", c: "F5",
+                d: "Ctrl+J" }, "d");
+        addQ(15, "Which protocol is used for transferring web pages and is the foundation of data communication on the World Wide Web?",
+            { a: "POP3", b: "FTP", c: "HTTP", d: "SMTP" }, "c");
+        addQ(16, "Which of the following is an example of a programming language?", { a: "Google Chrome", b: "Notepad",
+                c: "Java", d: "Windows 11" }, "c");
+        addQ(17, "Which of the following is an example of secondary storage?", { a: "RAM", b: "Cache", c: "Hard Disk",
+                d: "CPU" }, "c");
+        addQ(18, "Which of the following is an open-source LMS widely used by universities and schools?", { a: "Skype",
+                b: "WinZip", c: "Photoshop", d: "Moodle" }, "d");
+        addQ(19, "What is the hexadecimal equivalent of the decimal number 31?", { a: "1F", b: "30", c: "20", d: "1E" },
+            "a");
+        addQ(20, "Which of the following is a cloud computing platform used by developers and businesses?", { a: "VLC",
+                b: "Notepad", c: "Amazon Web Services (AWS)", d: "Photoshop" }, "c");
+        addQ(21, "Which of the following is a valid IPv4 address that can be used for Automatic Private IP Addressing (APIPA)?",
+            { a: "999.254.1.1", b: "169.254.1", c: "169.254.1.1.1", d: "169.254.1.1" }, "d");
+        addQ(22, "What is the purpose of phishing awareness training?", { a: "Help users recognize and avoid fraudulent attempts to steal information",
+                b: "Reduce spam automatically", c: "Speed up email delivery", d: "Increase email storage" }, "a");
+        addQ(23, "Which shortcut key is used to create a new folder in Windows?", { a: "Ctrl + N", b: "Ctrl + F",
+                c: "Ctrl + Shift + F", d: "Ctrl + Shift + N" }, "d");
+        addQ(24, "Which of the following is a popular navigation and maps application?", { a: "Google Maps", b: "Reddit",
+                c: "Snapchat", d: "Pinterest" }, "a");
+        addQ(25, "What is the primary purpose of a USB flash drive?", { a: "Input data", b: "Display output",
+                c: "Portable data storage", d: "Process data" }, "c");
+        addQ(26, "What is the decimal equivalent of the octal number 377?", { a: "256", b: "255", c: "254", d: "257" },
+            "b");
+        addQ(27, "Which of the following is a popular app for meditation and mindfulness?", { a: "Headspace", b: "Pinterest",
+                c: "Reddit", d: "LinkedIn" }, "a");
+        addQ(28, "Which shortcut key is used to open a new document?", { a: "Ctrl + P", b: "Ctrl + O", c: "Ctrl + N",
+                d: "Ctrl + S" }, "c");
+        addQ(29, "Which key is used to minimize all windows and show the desktop in Windows?", { a: "F5", b: "F1",
+                c: "Windows+D", d: "F12" }, "c");
+        addQ(30, "Which key decreases the zoom level in a web browser?", { a: "F5", b: "F12", c: "Ctrl+Minus (-)",
+                d: "F1" }, "c");
+        addQ(31, "What is the primary purpose of a mouse?", { a: "Process data", b: "Point and select on screen",
+                c: "Print documents", d: "Store data" }, "b");
+        addQ(32, "Which shortcut key is used to copy selected content?", { a: "Ctrl + V", b: "Ctrl + Z", c: "Ctrl + X",
+                d: "Ctrl + C" }, "d");
+        addQ(33, "Which of the following is an example of a programming language?", { a: "Windows Media Player",
+                b: "Go (Golang)", c: "Notepad", d: "Chrome OS" }, "b");
+        addQ(34, "What does LAN stand for?", { a: "Long Access Network", b: "Large Area Network", c: "Local Area Network",
+                d: "Linked Area Network" }, "c");
+        addQ(35, "What is the primary purpose of a plotter?", { a: "Process data",
+                b: "Print large-scale graphics and technical drawings", c: "Store files", d: "Input data" }, "b");
+        addQ(36, "Which of the following is an example of a programming language?", { a: "Excel", b: "Skype", c: "Ruby",
+                d: "Windows XP" }, "c");
+        addQ(37, "What is the binary equivalent of the hexadecimal number 10?", { a: "10001", b: "01111", c: "10000",
+                d: "01000" }, "c");
+        addQ(38, "Which of the following is an audio file extension?", { a: ".docx", b: ".wav", c: ".jpg", d: ".zip" },
+            "b");
+        addQ(39, "Which protocol provides a secure, encrypted version of website browsing?", { a: "FTP", b: "HTTPS",
+                c: "SMTP", d: "POP3" }, "b");
+        addQ(40, "What is the binary equivalent of the hexadecimal number FF?", { a: "11111111", b: "11111110",
+                c: "11111101", d: "10111111" }, "a");
+        addQ(41, "Which protocol is used for streaming multimedia content over the internet in real time?", { a: "HTTP",
+                b: "SMTP", c: "RTSP", d: "FTP" }, "c");
+        addQ(42, "Which key is used to insert a new line/paragraph in a document?", { a: "Enter", b: "Shift", c: "F5",
+                d: "Tab" }, "a");
+        addQ(43, "Which of the following is an example of a web browser?", { a: "Chromium", b: "Photoshop", c: "Skype",
+                d: "Excel" }, "a");
+        addQ(44, "Which of the following is an example of a programming language?", { a: "Paint", b: "Fortran",
+                c: "Google Chrome OS", d: "WinZip" }, "b");
+        addQ(45, "Which of the following is a font file extension?", { a: ".exe", b: ".ttf", c: ".docx", d: ".mp3" },
+            "b");
+        addQ(46, "Which of the following is an example of a web browser?", { a: "Maxthon", b: "Paint", c: "Access",
+                d: "PowerPoint" }, "a");
+        addQ(47, "Which of the following is a popular platform for hosting video meetings for businesses?", { a: "Zoom",
+                b: "Skype", c: "Google Meet", d: "Microsoft Teams" }, "d");
+        addQ(48, "What is the primary purpose of a headset with microphone?", { a: "Store files",
+                b: "Input and output audio", c: "Process data", d: "Display output only" }, "b");
+        addQ(49, "Which key is used to delete a character to the right of the cursor?", { a: "Delete", b: "Backspace",
+                c: "F5", d: "F12" }, "a");
+        addQ(50, "What is the hexadecimal equivalent of the binary number 11111111?", { a: "FE", b: "100", c: "F0",
+                d: "FF" }, "d");
+        addQ(51, "Which of the following is a programming/script file extension?", { a: ".mp4", b: ".py", c: ".jpg",
+                d: ".pdf" }, "b");
+        addQ(52, "In binary, which two digits are used to represent data?", { a: "1 and 9", b: "0 and 1", c: "1 and 2",
+                d: "0 and 2" }, "b");
+        addQ(53, "Which of the following is an example of a web browser?", { a: "iTunes", b: "Puffin Browser", c: "Excel",
+                d: "Zoom" }, "b");
+        addQ(54, "Which protocol provides a faster but less reliable, connectionless communication method?", { a: "UDP",
+                b: "TCP", c: "FTP", d: "SMTP" }, "a");
+        addQ(55, "What is the hexadecimal equivalent of the decimal number 128?", { a: "7F", b: "81", c: "80", d: "90" },
+            "c");
+        addQ(56, "Which of the following is an example of Software as a Service (SaaS)?", { a: "Windows Media Player",
+                b: "Google Workspace", c: "Paint", d: "WinRAR" }, "b");
+        addQ(57, "What is the decimal equivalent of the hexadecimal number A?", { a: "10", b: "12", c: "9", d: "11" },
+            "a");
+        addQ(58, "What is the hexadecimal equivalent of the binary number 10000?", { a: "0F", b: "10", c: "F", d: "11" },
+            "b");
+        addQ(59, "What is the binary equivalent of the decimal number 60?", { a: "111100", b: "110100", c: "111000",
+                d: "111101" }, "a");
+        addQ(60, "Which of the following best describes 'non-volatile memory'?", { a: "Memory used only for processing",
+                b: "Memory found only in the CPU", c: "Memory that loses data when power is off",
+                d: "Memory that retains data without power" }, "d");
+        addQ(61, "Which protocol is used for automatic configuration of network settings when a device connects to a network?",
+            { a: "FTP", b: "DHCP", c: "SMTP", d: "HTTP" }, "b");
+        addQ(62, "What is the decimal equivalent of the binary number 110?", { a: "6", b: "7", c: "4", d: "5" }, "a");
+        addQ(63, "What is the purpose of a digital signature?", { a: "Speed up file transfer", b: "Increase file size",
+                c: "Store passwords securely",
+                d: "Verify the authenticity and integrity of a digital message or document" }, "d");
+        addQ(64, "Which protocol establishes a reliable, connection-oriented communication between devices?", { a: "TCP",
+                b: "FTP", c: "UDP", d: "HTTP" }, "a");
+        addQ(65, "What is the decimal equivalent of the octal number 12?", { a: "9", b: "12", c: "10", d: "11" }, "c");
+        addQ(66, "Which of the following is a valid Class B IPv4 address?", { a: "172.999.5.5", b: "172.16.5.5",
+                c: "172.16.5.5.5", d: "172.16.5" }, "b");
+        addQ(67, "Which of the following is a cloud computing platform developed by Google?", { a: "Google Cloud Platform",
+                b: "Google Calculator", c: "Google Chrome", d: "Notepad" }, "a");
+        addQ(68, "What is the hexadecimal equivalent of the decimal number 10?", { a: "B", b: "A", c: "9", d: "F" }, "b");
+        addQ(69, "Which of the following is a cloud-based email service?", { a: "WordPad", b: "Microsoft Word", c: "Gmail",
+                d: "Paint" }, "c");
+        addQ(70, "Which unit is commonly used to measure internet connection speed?", { a: "Terabyte", b: "Kilobyte",
+                c: "Megabits per second (Mbps)", d: "Gigabyte" }, "c");
+        addQ(71, "Which Excel function extracts characters from the middle of a text string?", { a: "MID", b: "RIGHT",
+                c: "LEN", d: "LEFT" }, "a");
+        addQ(72, "Which of the following is an invalid IPv4 address due to an out-of-range octet?", { a: "8.8.8.8",
+                b: "999.1.1.1", c: "172.16.0.1", d: "127.0.0.1" }, "b");
+        addQ(73, "Which of the following is a cloud computing deployment model where services are shared among multiple organizations?",
+            { a: "Personal Cloud", b: "Local Cloud", c: "Private Cloud", d: "Community Cloud" }, "d");
+        addQ(74, "What is the octal equivalent of the decimal number 24?", { a: "29", b: "30", c: "32", d: "31" }, "b");
+        addQ(75, "Which of the following is an example of a web browser?", { a: "Excel", b: "Paint", c: "WordPad",
+                d: "Internet Explorer" }, "d");
+        addQ(76, "Which Excel function checks if a cell is blank/empty?", { a: "ISBLANK", b: "IFERROR", c: "ISERROR",
+                d: "NOT" }, "a");
+        addQ(77, "Which of the following is an example of a web browser?", { a: "Firefox", b: "Excel", c: "Paint",
+                d: "WordPad" }, "a");
+        addQ(78, "Which key is used to open the address bar directly in most web browsers?", { a: "F6", b: "F1", c: "F12",
+                d: "F10" }, "a");
+        addQ(79, "Which of the following is an example of a programming language?", { a: "Fedora Linux", b: "Dart",
+                c: "Paint", d: "VLC" }, "b");
+        addQ(80, "Which Excel function returns the number of characters in a text string?", { a: "MID", b: "LEFT", c: "LEN",
+                d: "RIGHT" }, "c");
+        addQ(81, "Which Excel function extracts a specified number of characters from the beginning of a text string?",
+            { a: "LEN", b: "MID", c: "LEFT", d: "RIGHT" }, "c");
+        addQ(82, "Which of the following is an example of a programming language?", { a: "iOS", b: "Kotlin", c: "WinZip",
+                d: "Photoshop" }, "b");
+        addQ(83, "Which of the following devices operates at the Network Layer of the OSI model to route data?",
+            { a: "Router", b: "Switch", c: "Hub", d: "Repeater" }, "a");
+        addQ(84, "What is a 'nibble' in computer terminology?", { a: "4 bits", b: "16 bits", c: "8 bits", d: "2 bits" },
+            "a");
+        addQ(85, "Which of the following is a popular learning management system (LMS)?", { a: "Skype",
+                b: "Google Classroom", c: "WinRAR", d: "Paint" }, "b");
+        addQ(86, "What is the binary equivalent of the decimal number 64?", { a: "1100000", b: "1000000", c: "0100000",
+                d: "1000001" }, "b");
+        addQ(87, "What does FTP stand for?", { a: "Fast Transfer Protocol", b: "File Transfer Protocol",
+                c: "Folder Transfer Protocol", d: "File Transmission Protocol" }, "b");
+        addQ(88, "Which of the following is a cloud-based project management tool?", { a: "Trello", b: "Paint", c: "Excel",
+                d: "WinRAR" }, "a");
+        addQ(89, "Which Excel function is used to look up a value in a table by matching a row?", { a: "INDEX",
+                b: "VLOOKUP", c: "MATCH", d: "HLOOKUP" }, "d");
+        addQ(90, "Which shortcut key is used to cut selected content?", { a: "Ctrl + V", b: "Ctrl + X", c: "Ctrl + Z",
+                d: "Ctrl + C" }, "b");
+        addQ(91, "Which of the following is an example of a web browser?", { a: "Adobe Reader", b: "Falkon", c: "WordPress",
+                d: "Zoom" }, "b");
+        addQ(92, "What is the binary equivalent of the decimal number 3?", { a: "01", b: "11", c: "10", d: "100" }, "b");
+        addQ(93, "What is the binary equivalent of the decimal number 8?", { a: "1000", b: "1001", c: "1100", d: "0100" },
+            "a");
+        addQ(94, "Which of the following is a popular platform for buying and selling used goods locally?", { a: "LinkedIn",
+                b: "Pinterest", c: "Facebook Marketplace", d: "Twitter" }, "c");
+        addQ(95, "Which of the following is larger than a Gigabyte?", { a: "Kilobyte", b: "Terabyte", c: "Megabyte",
+                d: "Byte" }, "b");
+        addQ(96, "What does OS stand for?", { a: "Operating System", b: "Operational Software", c: "Output System",
+                d: "Online System" }, "a");
+        addQ(97, "Which of the following is a popular platform for creating and sharing memes and communities?",
+            { a: "Reddit", b: "Instagram", c: "LinkedIn", d: "Pinterest" }, "a");
+        addQ(98, "Which Excel function returns the number of columns in a reference or array?", { a: "LEN", b: "ROWS",
+                c: "COUNT", d: "COLUMNS" }, "d");
+        addQ(99, "Which key is used to check for updates or refresh content in many applications, besides F5?",
+            { a: "Ctrl+R", b: "F1", c: "F12", d: "F10" }, "a");
+        addQ(100, "What does HTML stand for?", { a: "HyperText Markup Language", b: "Home Tool Markup Language",
+                c: "HyperTransfer Machine Language", d: "High Transfer Markup Language" }, "a");
+        addQ(101, "What is the primary purpose of a fingerprint scanner?", { a: "Print documents",
+                b: "Input biometric data for authentication", c: "Store files", d: "Display output" }, "b");
+        addQ(102, "What is the primary purpose of a UPS (Uninterruptible Power Supply)?", { a: "Provide backup power during outages",
+                b: "Display output", c: "Input data", d: "Store files" }, "a");
+        addQ(103, "What does SQL stand for?", { a: "Structured Query Language", b: "System Query Language",
+                c: "Simple Query Language", d: "Standard Query Language" }, "a");
+        addQ(104, "What is the binary equivalent of the decimal number 50?", { a: "110001", b: "110010", c: "101010",
+                d: "110100" }, "b");
+        addQ(105, "What is the purpose of a graphics editing software?", { a: "Manage network traffic",
+                b: "Create and edit digital images", c: "Store backup files", d: "Browse the internet" }, "b");
+        addQ(106, "Which Excel function raises a number to a specified power?", { a: "SORT", b: "POWER", c: "ABS",
+                d: "ROUND" }, "b");
+        addQ(107, "Which shortcut key is used to make selected text bold?", { a: "Ctrl + U", b: "Ctrl + E", c: "Ctrl + B",
+                d: "Ctrl + I" }, "c");
+        addQ(108, "Which of the following is a popular learning management system (LMS)?", { a: "Notepad", b: "VLC",
+                c: "Edmodo", d: "WinZip" }, "c");
+        addQ(109, "What does LED stand for?", { a: "Low Emitting Diode", b: "Light Emitting Device",
+                c: "Light Electric Diode", d: "Light Emitting Diode" }, "d");
+        addQ(110, "Which of the following is a document file extension?", { a: ".docx", b: ".jpg", c: ".mp4", d: ".exe" },
+            "a");
+        addQ(111, "Which protocol is used to send error messages and operational information about network conditions?",
+            { a: "FTP", b: "HTTP", c: "SMTP", d: "ICMP" }, "d");
+        addQ(112, "Which of the following is a valid loopback IPv4 address?", { a: "127.0.0.1", b: "999.0.0.1",
+                c: "10.10.10.256", d: "0.0.0.0.0" }, "a");
+        addQ(113, "What is the primary purpose of a stylus/digital pen?", { a: "Display output",
+                b: "Input handwritten or drawn data", c: "Process data", d: "Store files" }, "b");
+        addQ(114, "Which of the following is a cloud-based service used for online form creation and data collection?",
+            { a: "Notepad", b: "Paint", c: "WinRAR", d: "Google Forms" }, "d");
+        addQ(115, "Which of the following is an example of a web browser?", { a: "Winamp", b: "Paint", c: "Outlook",
+                d: "Midori" }, "d");
+        addQ(116, "Which of the following is a JavaScript file extension?", { a: ".exe", b: ".docx", c: ".js", d: ".png" },
+            "c");
+        addQ(117, "What does ROM stand for?", { a: "Random Only Memory", b: "Read Only Memory", c: "Read Output Memory",
+                d: "Rapid Output Memory" }, "b");
+        addQ(118, "Which of the following is a cloud computing service used by businesses for enterprise resource planning?",
+            { a: "SAP Cloud", b: "WordPad", c: "Excel", d: "Notepad" }, "a");
+        addQ(119, "Which of the following is a popular platform for movie and TV show streaming?", { a: "Pinterest",
+                b: "LinkedIn", c: "Twitter", d: "Netflix" }, "d");
+        addQ(120, "Which of the following is a popular platform for team communication in workplaces?", { a: "Pinterest",
+                b: "Snapchat", c: "Slack", d: "Instagram" }, "c");
+        addQ(121, "Which of the following is an example of a web browser?", { a: "Word", b: "Skype", c: "Access",
+                d: "Torch Browser" }, "d");
+        addQ(122, "Which Excel function returns a random integer between two specified values?", { a: "ROUND",
+                b: "RANDBETWEEN", c: "RAND", d: "ABS" }, "b");
+        addQ(123, "Which key is commonly used with other keys to perform shortcut commands?", { a: "Shift", b: "Enter",
+                c: "Ctrl", d: "Tab" }, "c");
+        addQ(124, "What is the decimal equivalent of the hexadecimal number F?", { a: "16", b: "13", c: "14", d: "15" },
+            "d");
+        addQ(125, "Which of the following is an example of a database query language?", { a: "SQL", b: "Excel Viewer",
+                c: "Windows 10", d: "Winamp" }, "a");
+        addQ(126, "Which of the following is an example of optical storage media?", { a: "Register", b: "DVD", c: "SSD",
+                d: "RAM" }, "b");
+        addQ(127, "Which of the following is a cloud-based collaborative document editing service?", { a: "Paint",
+                b: "Google Docs", c: "Notepad", d: "Calculator" }, "b");
+        addQ(128, "Which of the following is a cloud-based platform for hosting code repositories?", { a: "Notepad",
+                b: "Calculator", c: "GitHub", d: "Paint" }, "c");
+        addQ(129, "Which protocol is used for chat and instant messaging services?", { a: "SMTP", b: "HTTP", c: "XMPP",
+                d: "FTP" }, "c");
+        addQ(130, "What is the primary purpose of a card reader?", { a: "Process instructions", b: "Display output",
+                c: "Print documents", d: "Input/transfer data from memory cards" }, "d");
+        addQ(131, "Which of the following is a popular video-sharing platform for long-form content?", { a: "YouTube",
+                b: "Twitter", c: "Snapchat", d: "Pinterest" }, "a");
+        addQ(132, "What is the hexadecimal equivalent of the decimal number 16?", { a: "0F", b: "11", c: "10", d: "F" },
+            "c");
+        addQ(133, "What is the purpose of a file compression tool?", { a: "Reduce file size for storage or transfer",
+                b: "Edit videos", c: "Increase internet speed", d: "Browse websites" }, "a");
+        addQ(134, "Which key repeats the last action performed in Microsoft Word?", { a: "F5", b: "F10", c: "F4",
+                d: "F12" }, "c");
+        addQ(135, "What is the decimal equivalent of the octal number 40?", { a: "34", b: "31", c: "32", d: "33" }, "c");
+        addQ(136, "Which of the following is a popular platform for professional networking?", { a: "Pinterest",
+                b: "LinkedIn", c: "Snapchat", d: "Instagram" }, "b");
+        addQ(137, "Which of the following is a popular budgeting and personal finance app?", { a: "Mint", b: "Pinterest",
+                c: "Reddit", d: "LinkedIn" }, "a");
+        addQ(138, "Which of the following is an executable file extension?", { a: ".mp4", b: ".jpg", c: ".docx",
+                d: ".exe" }, "d");
+        addQ(139, "Which of the following is a system/driver file extension?", { a: ".docx", b: ".dll", c: ".jpg",
+                d: ".mp3" }, "b");
+        addQ(140, "Which protocol is used for receiving emails and downloading them to a local device?", { a: "SMTP",
+                b: "HTTP", c: "FTP", d: "POP3" }, "d");
+        addQ(141, "Which shortcut key is used to open Task Manager directly?", { a: "Windows + R", b: "Ctrl + Alt + Delete",
+                c: "Ctrl + Shift + Esc", d: "Alt + Tab" }, "c");
+        addQ(142, "Which Excel function returns the current date and time?", { a: "TODAY", b: "NOW", c: "TIME",
+                d: "DATE" }, "b");
+        addQ(143, "Which key toggles the ability to type only capital letters?", { a: "F5", b: "F12", c: "F10",
+                d: "Caps Lock" }, "d");
+        addQ(144, "Which key resets the browser zoom level to default?", { a: "F1", b: "Ctrl+0", c: "F10", d: "F5" },
+            "b");
+        addQ(145, "Which key reopens the last closed tab in most web browsers?", { a: "Ctrl+Shift+T", b: "F1", c: "F10",
+                d: "F5" }, "a");
+        addQ(146, "Which of the following is an invalid IPv4 address because it has too few octets?", { a: "10.1.1.1",
+                b: "192.168.1", c: "8.8.4.4", d: "172.16.0.5" }, "b");
+        addQ(147, "Which of the following is a popular note-taking and organization app?", { a: "Pinterest", b: "Twitter",
+                c: "Evernote", d: "LinkedIn" }, "c");
+        addQ(148, "Which shortcut key is used to open the Run dialog box?", { a: "Windows + E", b: "Windows + R",
+                c: "Windows + D", d: "Windows + L" }, "b");
+        addQ(149, "Which of the following is a shortcut file extension used in Windows?", { a: ".docx", b: ".lnk",
+                c: ".mp3", d: ".jpg" }, "b");
+        addQ(150, "What does WAN stand for?", { a: "World Area Network", b: "Wide Area Network",
+                c: "Wireless Area Network", d: "Web Access Network" }, "b");
+        addQ(151, "Which Excel function is used to find the square root of a number?", { a: "ABS", b: "ROUND", c: "SQRT",
+                d: "POWER" }, "c");
+        addQ(152, "Which of the following is a cloud computing service?", { a: "Calculator", b: "Dropbox", c: "WinRAR",
+                d: "Notepad" }, "b");
+        addQ(153, "Which protocol is used for managing and monitoring network devices?", { a: "SMTP", b: "SNMP", c: "HTTP",
+                d: "FTP" }, "b");
+        addQ(154, "Which Excel function is used to freeze a specific cell reference when copying a formula?", { a: "IF",
+                b: "TRIM", c: "Absolute Reference ($)", d: "LEN" }, "c");
+        addQ(155, "Which shortcut key is used to minimize all open windows and show the desktop?", { a: "Alt + F4",
+                b: "Windows + D", c: "Ctrl + M", d: "Ctrl + Esc" }, "b");
+        addQ(156, "Which of the following is a cloud storage service developed by Apple?", { a: "Notepad", b: "Photoshop",
+                c: "iCloud Drive", d: "Paint" }, "c");
+        addQ(157, "What is the primary purpose of a power supply unit (PSU)?", { a: "Convert and supply electrical power to components",
+                b: "Input data", c: "Display output", d: "Store files" }, "a");
+        addQ(158, "Which of the following is a backup file extension?", { a: ".docx", b: ".bak", c: ".jpg", d: ".mp3" },
+            "b");
+        addQ(159, "What is the hexadecimal equivalent of the decimal number 15?", { a: "F", b: "E", c: "D", d: "10" },
+            "a");
+        addQ(160, "What is the decimal equivalent of the binary number 110010?", { a: "49", b: "50", c: "51", d: "52" },
+            "b");
+        addQ(161, "Which shortcut key is used to open an existing document?", { a: "Ctrl+N", b: "Ctrl+O", c: "Ctrl+P",
+                d: "Ctrl+S" }, "b");
+        addQ(162, "Which of the following is a popular platform for crowdfunding projects?", { a: "Kickstarter",
+                b: "LinkedIn", c: "Pinterest", d: "Instagram" }, "a");
+        addQ(163, "Which shortcut key is used to paste copied content in a document?", { a: "Ctrl+C", b: "Ctrl+V",
+                c: "Ctrl+Z", d: "Ctrl+X" }, "b");
+        addQ(164, "Which of the following is a valid IPv4 address?", { a: "192.168.-1.1", b: "172.16.254.1",
+                c: "192.168.1.1.1", d: "256.1.1.1" }, "b");
+        addQ(165, "What is the decimal equivalent of the octal number 100?", { a: "64", b: "66", c: "63", d: "65" }, "a");
+        addQ(166, "Which of the following is an example of a web browser?", { a: "Winamp", b: "Excel", c: "Konqueror",
+                d: "Outlook" }, "c");
+        addQ(167, "Which of the following is a popular app for weather forecasts?", { a: "Pinterest", b: "Snapchat",
+                c: "AccuWeather", d: "Reddit" }, "c");
+        addQ(168, "What is the purpose of an IP address?", { a: "Edit documents", b: "Store files", c: "Compress data",
+                d: "Uniquely identify a device on a network" }, "d");
+        addQ(169, "What is the purpose of a backup software?", { a: "Edit documents", b: "Browse websites",
+                c: "Create copies of data to prevent loss", d: "Increase internet speed" }, "c");
+        addQ(170, "Which key removes a character to the left of the cursor?", { a: "F12", b: "Backspace", c: "Delete",
+                d: "F5" }, "b");
+        addQ(171, "Which type of memory is used to store the computer's startup instructions (BIOS)?", { a: "ROM",
+                b: "RAM", c: "Hard Disk", d: "Cache" }, "a");
+        addQ(172, "Which of the following is a cloud-based video conferencing service?", { a: "Paint",
+                b: "Windows Media Player", c: "Zoom", d: "VLC Media Player" }, "c");
+        addQ(173, "Which key is used to close the current tab in a web browser?", { a: "Ctrl+W", b: "F10", c: "F1",
+                d: "F12" }, "a");
+        addQ(174, "What is the primary purpose of a microphone?", { a: "Display output", b: "Print documents",
+                c: "Store files", d: "Input audio data" }, "d");
+        addQ(175, "Which of the following is an example of a programming language?", { a: "Skype", b: "Google Drive",
+                c: "R", d: "macOS" }, "c");
+        addQ(176, "Which of the following is a tool used for creating interactive quizzes for classrooms?", { a: "Excel",
+                b: "Notepad", c: "Kahoot", d: "WinZip" }, "c");
+        addQ(177, "Which Excel function rounds a number down to the nearest integer?", { a: "ROUND", b: "ABS", c: "INT",
+                d: "TRUNC" }, "c");
+        addQ(178, "What is the purpose of a VPN?", { a: "Store files in the cloud", b: "Edit documents",
+                c: "Increase internet speed", d: "Secure online connections" }, "d");
+        addQ(179, "What is the primary purpose of RAM?", { a: "Print documents", b: "Temporarily store data being used",
+                c: "Permanently store files", d: "Display output" }, "b");
+        addQ(180, "Which key activates the menu bar in many Windows applications?", { a: "F10", b: "F2", c: "F5",
+                d: "F1" }, "a");
+        addQ(181, "What is the binary equivalent of the decimal number 10?", { a: "1010", b: "1100", c: "1001",
+                d: "1111" }, "a");
+        addQ(182, "What is the binary equivalent of the decimal number 128?", { a: "10000000", b: "10000001",
+                c: "01000000", d: "11000000" }, "a");
+        addQ(183, "Which Excel function extracts a specified number of characters from the end of a text string?",
+            { a: "RIGHT", b: "LEN", c: "MID", d: "LEFT" }, "a");
+        addQ(184, "Which of the following best distinguishes primary memory from secondary memory?", { a: "Secondary memory is faster than primary",
+                b: "Primary memory is always larger in capacity",
+                c: "Primary memory is temporary/volatile, secondary memory is permanent/nonvolatile",
+                d: "Primary memory is used only for backup" }, "c");
+        addQ(185, "Which key is used to move to the next field or add indentation in text?", { a: "Ctrl", b: "Enter",
+                c: "Shift", d: "Tab" }, "d");
+        addQ(186, "Which protocol is used to establish a secure tunnel for browsing by encrypting data between client and server?",
+            { a: "HTTP", b: "TLS/SSL", c: "FTP", d: "SMTP" }, "b");
+        addQ(187, "Which of the following is a web page style file extension?", { a: ".css", b: ".html", c: ".js",
+                d: ".jpg" }, "a");
+        addQ(188, "Which of the following best describes 'volatile memory'?", { a: "Memory used only for backup",
+                b: "Memory that loses data when power is off", c: "Memory that cannot be erased",
+                d: "Memory that stores data permanently" }, "b");
+        addQ(189, "Which of the following is a cloud-based backup service?", { a: "Carbonite", b: "Calculator",
+                c: "Notepad", d: "Paint" }, "a");
+        addQ(190, "Which protocol is used for sending emails?", { a: "POP3", b: "FTP", c: "HTTP", d: "SMTP" }, "d");
+        addQ(191, "Which of the following is a cloud-based file storage and sharing service?", { a: "VLC", b: "iCloud",
+                c: "Photoshop", d: "Calculator" }, "b");
+        addQ(192, "Which Excel function returns a value if a formula results in an error?", { a: "ISERROR", b: "IF",
+                c: "IFERROR", d: "NOT" }, "c");
+        addQ(193, "What is the binary equivalent of the decimal number 40?", { a: "101001", b: "100100", c: "110000",
+                d: "101000" }, "d");
+        addQ(194, "What does BIOS stand for?", { a: "Basic Input Output System", b: "Basic Internal Output System",
+                c: "Binary Input Output System", d: "Basic Integrated Output System" }, "a");
+        addQ(195, "Which device stores and forwards data to reduce network congestion by identifying device addresses?",
+            { a: "Modem", b: "Switch", c: "Hub", d: "Repeater" }, "b");
+        addQ(196, "Which of the following is an example of a programming language?", { a: "Excel", b: "Ubuntu Linux",
+                c: "WordPad", d: "Julia" }, "d");
+        addQ(197, "What is the primary purpose of a webcam?", { a: "Input video/audio data", b: "Print documents",
+                c: "Store files", d: "Display output" }, "a");
+        addQ(198, "Which cable is commonly used to connect a computer to a modem or router for wired internet access?",
+            { a: "Coaxial cable", b: "Ethernet cable", c: "USB cable", d: "HDMI cable" }, "b");
+        addQ(199, "What is the purpose of a hard disk defragmenter?", { a: "Store cloud backups", b: "Edit documents",
+                c: "Reorganize fragmented data to improve system performance", d: "Increase internet speed" }, "c");
+        addQ(200, "Which shortcut key is used to open the Help menu in most applications?", { a: "F3", b: "F4", c: "F1",
+                d: "F2" }, "c");
+        addQ(201, "Which of the following is a valid broadcast IPv4 address?", { a: "256.256.256.256",
+                b: "255.255.255.255.255", c: "255.255.255", d: "255.255.255.255" }, "d");
+        addQ(202, "What is the decimal equivalent of the binary number 1101?", { a: "14", b: "13", c: "11", d: "12" },
+            "b");
+        addQ(203, "Which of the following is a popular platform for coding collaboration and version control?", { a: "Snapchat",
+                b: "Instagram", c: "Pinterest", d: "GitHub" }, "d");
+        addQ(204, "What does GUI stand for?", { a: "General User Interface", b: "Global User Interface",
+                c: "Graphic Utility Interface", d: "Graphical User Interface" }, "d");
+        addQ(205, "Which of the following is an example of a web browser?", { a: "WinZip", b: "Zoom", c: "Sleipnir",
+                d: "Excel" }, "c");
+        addQ(206, "Which memory type is temporary and used to hold data currently being processed?", { a: "Flash Drive",
+                b: "ROM", c: "Hard Disk", d: "RAM" }, "d");
+        addQ(207, "What is the primary purpose of a graphics card (GPU)?", { a: "Process and render visual output",
+                b: "Print documents", c: "Input data", d: "Store files" }, "a");
+        addQ(208, "Which memory type is typically used in USB drives and memory cards?", { a: "Cache", b: "Register",
+                c: "RAM", d: "Flash Memory" }, "d");
+        addQ(209, "Which protocol is used by network devices to discover other devices and gather topology information?",
+            { a: "LLDP", b: "FTP", c: "SMTP", d: "HTTP" }, "a");
+        addQ(210, "Which of the following is an invalid IPv4 address because it has too many octets?", { a: "172.16.0.1",
+                b: "192.168.1.1", c: "10.0.0.1", d: "192.168.1.1.5" }, "d");
+        addQ(211, "Which Excel function calculates a future date after adding a specified number of working days?",
+            { a: "DATEDIF", b: "WORKDAY", c: "DATE", d: "NETWORKDAYS" }, "b");
+        addQ(212, "Which of the following is a popular learning management system (LMS)?", { a: "Photoshop", b: "Moodle",
+                c: "Notepad", d: "Zoom" }, "b");
+        addQ(213, "Which of the following is a popular platform for booking flights and travel?", { a: "Expedia",
+                b: "Snapchat", c: "Reddit", d: "Pinterest" }, "a");
+        addQ(214, "Which key opens browsing history in most web browsers?", { a: "F1", b: "F10", c: "F5",
+                d: "Ctrl+H" }, "d");
+        addQ(215, "What is the purpose of a compiler?", { a: "Display graphics", b: "Manage network traffic",
+                c: "Translate source code into machine code", d: "Store data permanently" }, "c");
+        addQ(216, "What is the purpose of a database management system (DBMS)?", { a: "Increase internet speed",
+                b: "Store, organize, and manage data efficiently", c: "Edit images", d: "Play videos" }, "b");
+        addQ(217, "What is the smallest unit of digital information?", { a: "Bit", b: "Byte", c: "Kilobyte",
+                d: "Megabyte" }, "a");
+        addQ(218, "What is the purpose of a proxy server?", { a: "Store backup files", b: "Display webpages faster only",
+                c: "Act as an intermediary between a user and the internet for security and privacy",
+                d: "Increase file storage" }, "c");
+        addQ(219, "Which key is used to open the Run dialog box?", { a: "F5", b: "F1", c: "Windows+R", d: "F12" }, "c");
+        addQ(220, "Which shortcut key is used to lock the computer screen?", { a: "Windows+D", b: "Windows+L",
+                c: "Windows+R", d: "Windows+E" }, "b");
+        addQ(221, "What is the hexadecimal equivalent of the decimal number 50?", { a: "33", b: "31", c: "52", d: "32" },
+            "d");
+        addQ(222, "Which of the following is an example of a programming language?", { a: "Safari", b: "macOS",
+                c: "JavaScript", d: "CorelDRAW" }, "c");
+        addQ(223, "What is the octal equivalent of the decimal number 32?", { a: "41", b: "39", c: "40", d: "42" }, "c");
+        addQ(224, "Which of the following is a video file extension?", { a: ".gif", b: ".flv", c: ".pdf", d: ".docx" },
+            "b");
+        addQ(225, "Which of the following is a popular platform for online resume building?", { a: "Canva", b: "Snapchat",
+                c: "Reddit", d: "Instagram" }, "a");
+        addQ(226, "Which of the following memory types is measured in nanoseconds for access speed and is the fastest form of storage?",
+            { a: "Cache", b: "RAM", c: "Register", d: "ROM" }, "c");
+        addQ(227, "Which of the following is an example of a web browser?", { a: "Pale Moon", b: "Access", c: "Photoshop",
+                d: "Notepad" }, "a");
+        addQ(228, "Which of the following is an example of a web browser?", { a: "Adobe Reader", b: "Access", c: "Slimjet",
+                d: "Winamp" }, "c");
+        addQ(229, "Which of the following is an example of a web browser?", { a: "Notepad", b: "Skype", c: "WinRAR",
+                d: "Safari" }, "d");
+        addQ(230, "Which shortcut key is used to find a word in a document?", { a: "Ctrl + R", b: "Ctrl + G", c: "Ctrl + H",
+                d: "Ctrl + F" }, "d");
+        addQ(231, "What is the purpose of an intrusion detection system (IDS)?", { a: "Speed up network traffic",
+                b: "Monitor and detect unauthorized or suspicious network activity", c: "Manage user passwords",
+                d: "Store network logs permanently" }, "b");
+        addQ(232, "Which of the following is a cloud computing service?", { a: "VLC Media Player", b: "OneDrive",
+                c: "Microsoft Excel", d: "Notepad" }, "b");
+        addQ(233, "What is the decimal equivalent of the binary number 100000?", { a: "31", b: "33", c: "30", d: "32" },
+            "d");
+        addQ(234, "Approximately how many bytes are there in one kilobyte?", { a: "10000", b: "500", c: "1024",
+                d: "100" }, "c");
+        addQ(235, "What is the binary equivalent of the decimal number 15?", { a: "1110", b: "1100", c: "1111",
+                d: "1101" }, "c");
+        addQ(236, "Which of the following is an image file extension?", { a: ".gif", b: ".docx", c: ".mp3", d: ".zip" },
+            "a");
+        addQ(237, "Which of the following is a valid IPv4 address?", { a: "192.168.1.1", b: "192.168.1.256",
+                c: "256.256.1.1", d: "192.168.1" }, "a");
+        addQ(238, "What is the binary equivalent of the decimal number 255?", { a: "10111111", b: "11111101",
+                c: "11111111", d: "11111110" }, "c");
+        addQ(239, "Which device connects multiple devices in a network and broadcasts data to all ports?", { a: "Router",
+                b: "Gateway", c: "Switch", d: "Hub" }, "d");
+        addQ(240, "Which of the following is a cloud-based music streaming service?", { a: "VLC Media Player", b: "Winamp",
+                c: "Windows Media Player", d: "Spotify" }, "d");
+        addQ(241, "Which of the following is a popular platform for online auctions?", { a: "Reddit", b: "LinkedIn",
+                c: "eBay", d: "Pinterest" }, "c");
+        addQ(242, "Which key combination is used to force close an unresponsive application?", { a: "Alt+F4", b: "F5",
+                c: "F1", d: "F10" }, "a");
+        addQ(243, "What is the binary equivalent of the decimal number 25?", { a: "11001", b: "11010", c: "10101",
+                d: "11100" }, "a");
+        addQ(244, "What is the primary purpose of a projector?", { a: "Display output on a large surface",
+                b: "Process data", c: "Input data", d: "Store files" }, "a");
+        addQ(245, "Which of the following is an example of a programming language?", { a: "Adobe Photoshop", b: "Excel",
+                c: "Windows Explorer", d: "C++" }, "d");
+        addQ(246, "Which key is used to rename a selected file or folder in Windows?", { a: "F12", b: "F1", c: "F2",
+                d: "F5" }, "c");
+        addQ(247, "Which type of memory loses its data when the power is turned off?", { a: "RAM", b: "SSD", c: "ROM",
+                d: "Flash Drive" }, "a");
+        addQ(248, "Which of the following is an example of a web browser?", { a: "Excel", b: "VLC", c: "WinRAR",
+                d: "Avast Secure Browser" }, "d");
+        addQ(249, "Which of the following is an example of a web browser?", { a: "Notepad", b: "WinRAR",
+                c: "Yandex Browser", d: "Windows Explorer" }, "c");
+        addQ(250, "Which of the following is a popular e-commerce platform for online shopping?", { a: "Instagram",
+                b: "Snapchat", c: "Amazon", d: "Reddit" }, "c");
+        addQ(251, "Which of the following is a popular platform for booking accommodations?", { a: "Airbnb", b: "LinkedIn",
+                c: "Twitter", d: "Pinterest" }, "a");
+        addQ(252, "What is the purpose of cloud storage?", { a: "Edit videos", b: "Increase processing speed",
+                c: "Manage hardware drivers", d: "Store and access data remotely over the internet" }, "d");
+        addQ(253, "Which key is used to pause the currently running program or process on some systems?", { a: "F5",
+                b: "Pause/Break", c: "F12", d: "F1" }, "b");
+        addQ(254, "Which of the following is a valid Class C IPv4 address?", { a: "192.168.5", b: "192.168.5.5",
+                c: "192.168.5.999", d: "192.999.5.5" }, "b");
+        addQ(255, "Which of the following best describes 'Terabyte'?", { a: "1024 Megabytes", b: "1024 Gigabytes",
+                c: "1024 Kilobytes", d: "1024 Bytes" }, "b");
+        addQ(256, "What is the decimal equivalent of the binary number 101000?", { a: "39", b: "40", c: "41", d: "42" },
+            "b");
+        addQ(257, "Which Excel function removes extra spaces from text?", { a: "TRIM", b: "LEN", c: "LEFT", d: "UPPER" },
+            "a");
+        addQ(258, "What is the decimal equivalent of the octal number 10?", { a: "8", b: "10", c: "9", d: "7" }, "a");
+        addQ(259, "What does ATM stand for (computing/banking context)?", { a: "Automated Transfer Mode",
+                b: "Auto Teller Mode", c: "Automatic Transfer Machine", d: "Automated Teller Machine" }, "d");
+        addQ(260, "Which shortcut key is used to replace a word in a document?", { a: "Ctrl + H", b: "Ctrl + R",
+                c: "Ctrl + F", d: "Ctrl + G" }, "a");
+        addQ(261, "Which shortcut key is used to select all content in a document?", { a: "Ctrl + B", b: "Ctrl + A",
+                c: "Ctrl + D", d: "Ctrl + E" }, "b");
+        addQ(262, "Which of the following is a popular fitness and workout tracking app?", { a: "Strava", b: "Reddit",
+                c: "LinkedIn", d: "Pinterest" }, "a");
+        addQ(263, "Which of the following is a valid private IPv4 address range?", { a: "192.168.0.0 - 192.168.255.255",
+                b: "999.999.999.999", c: "192.168.0.0 - 192.168.255.255",
+                d: "300.0.0.0 - 300.255.255.255" }, "a");
+        addQ(264, "What is the primary purpose of speakers?", { a: "Process data", b: "Input data", c: "Output audio sound",
+                d: "Store files" }, "c");
+        addQ(265, "What is the purpose of an anti-malware program?", { a: "Manage network bandwidth",
+                b: "Backup system files", c: "Detect and remove malicious software",
+                d: "Increase internet speed beyond just viruses" }, "c");
+        addQ(266, "What is the primary purpose of a barcode reader?", { a: "Store files", b: "Print documents",
+                c: "Input encoded data", d: "Display output" }, "c");
+        addQ(267, "What is the primary purpose of a printer?", { a: "Input data", b: "Process data",
+                c: "Produce hard copy output", d: "Store files" }, "c");
+        addQ(268, "What is the decimal equivalent of the hexadecimal number 10?", { a: "16", b: "18", c: "17", d: "1" },
+            "a");
+        addQ(269, "What is the purpose of access control in a computer system?", { a: "Store user files",
+                b: "Restrict system or data access to authorized users", c: "Increase processing speed",
+                d: "Display system notifications" }, "b");
+        addQ(270, "Which shortcut key is used to move the cursor to the end of a line?", { a: "Page Down", b: "Page Up",
+                c: "End", d: "Home" }, "c");
+        addQ(271, "Which of the following is a valid IPv4 address?", { a: "300.10.5.5", b: "10.0.0.1",
+                c: "172.16.256.1", d: "192.168.1." }, "b");
+        addQ(272, "Which of the following is a vector image file extension?", { a: ".exe", b: ".docx", c: ".mp4",
+                d: ".svg" }, "d");
+        addQ(273, "Which shortcut key is used to close an open window or application?", { a: "Ctrl + Q", b: "Ctrl + X",
+                c: "Alt + F4", d: "Ctrl + W" }, "c");
+        addQ(274, "Which of the following is a cloud-based note-taking service?", { a: "Notepad", b: "Evernote",
+                c: "WordPad", d: "Paint" }, "b");
+        addQ(275, "Which of the following units is used to measure RAM capacity?", { a: "Gigabyte", b: "Decibel",
+                c: "Pixels", d: "Hertz" }, "a");
+        addQ(276, "Which of the following is a disk image file extension?", { a: ".jpg", b: ".iso", c: ".mp3", d: ".docx" },
+            "b");
+        addQ(277, "Which type of ROM allows data to be electrically erased and reprogrammed?", { a: "RAM", b: "Cache",
+                c: "EEPROM", d: "PROM" }, "c");
+        addQ(278, "Which key is used in combination with letters to type uppercase or symbols?", { a: "Alt", b: "Tab",
+                c: "Enter", d: "Shift" }, "d");
+        addQ(279, "Which Excel function converts text to all uppercase letters?", { a: "TRIM", b: "PROPER", c: "LOWER",
+                d: "UPPER" }, "d");
+        addQ(280, "Which key opens Incognito/Private browsing mode in most web browsers?", { a: "F1", b: "F10",
+                c: "Ctrl+Shift+N", d: "F5" }, "c");
+        addQ(281, "Which of the following is a popular platform for job searching?", { a: "Indeed", b: "Reddit",
+                c: "Pinterest", d: "Snapchat" }, "a");
+        addQ(282, "What is the purpose of a CAPTCHA?", { a: "Store login credentials", b: "Speed up website loading",
+                c: "Encrypt user data", d: "Verify that the user is a human, not a bot" }, "d");
+        addQ(283, "What is the purpose of a security patch?", { a: "Speed up boot time", b: "Improve graphics quality",
+                c: "Increase storage capacity", d: "Fix known security vulnerabilities in software" }, "d");
+        addQ(284, "What is the primary purpose of a monitor?", { a: "Store files", b: "Display output", c: "Process data",
+                d: "Input data" }, "b");
+        addQ(285, "What is the purpose of a honeypot in cybersecurity?", { a: "Store legitimate user data",
+                b: "Attract and detect attackers by simulating a vulnerable target", c: "Speed up network performance",
+                d: "Encrypt sensitive files" }, "b");
+        addQ(286, "Which of the following is an example of a web browser?", { a: "Netscape Navigator", b: "Excel",
+                c: "Paint", d: "WinRAR" }, "a");
+        addQ(287, "Which device provides wireless connectivity to devices within a network?", { a: "Wireless Access Point",
+                b: "Modem", c: "Hub", d: "Switch" }, "a");
+        addQ(288, "Which of the following is a compressed/archive file extension?", { a: ".docx", b: ".zip", c: ".mp3",
+                d: ".png" }, "b");
+        addQ(289, "What is the octal equivalent of the decimal number 8?", { a: "10", b: "11", c: "8", d: "7" }, "a");
+        addQ(290, "Which shortcut key is used to move the cursor to the beginning of a line?", { a: "End", b: "Home",
+                c: "Page Down", d: "Page Up" }, "b");
+        addQ(291, "Which Excel function capitalizes the first letter of each word in a text string?", { a: "LOWER",
+                b: "TRIM", c: "UPPER", d: "PROPER" }, "d");
+        addQ(292, "Which of the following is a cloud-based file synchronization and sharing platform developed by Box Inc.?",
+            { a: "Notepad", b: "Box", c: "Calculator", d: "Paint" }, "b");
+        addQ(293, "Which of the following is a popular platform for online freelance work?", { a: "Snapchat", b: "Instagram",
+                c: "Upwork", d: "Pinterest" }, "c");
+        addQ(294, "Which key is used to switch between insert and overtype modes in Word?", { a: "F5", b: "Insert",
+                c: "Delete", d: "F12" }, "b");
+        addQ(295, "Which of the following is a popular messaging app known for end-to-end encryption?", { a: "WhatsApp",
+                b: "Facebook", c: "Pinterest", d: "LinkedIn" }, "a");
+        addQ(296, "What is the hexadecimal equivalent of the decimal number 200?", { a: "C8", b: "C7", c: "C9", d: "D0" },
+            "a");
+        addQ(297, "Which shortcut key is used to undo the last action?", { a: "Ctrl + X", b: "Ctrl + Z", c: "Ctrl + C",
+                d: "Ctrl + Y" }, "b");
+        addQ(298, "Which of the following is a non-volatile memory?", { a: "Cache Memory", b: "Register", c: "ROM",
+                d: "RAM" }, "c");
+        addQ(299, "Which protocol is responsible for dynamic routing between different networks on the internet?",
+            { a: "SMTP", b: "FTP", c: "HTTP", d: "BGP" }, "d");
+        addQ(300, "What is the purpose of data backup redundancy (e.g., RAID)?", { a: "Speed up internet browsing",
+                b: "Increase display resolution", c: "Protect data by duplicating it across multiple storage locations",
+                d: "Reduce file size" }, "c");
+        addQ(301, "Which of the following is a PDF file extension?", { a: ".pdf", b: ".docx", c: ".mp4", d: ".exe" },
+            "a");
+        addQ(302, "What is the decimal equivalent of the octal number 24?", { a: "19", b: "20", c: "21", d: "22" }, "b");
+        addQ(303, "Which of the following is an email file extension?", { a: ".exe", b: ".eml", c: ".jpg", d: ".mp4" },
+            "b");
+        addQ(304, "Which of the following is an example of a web browser?", { a: "Waterfox", b: "WinZip", c: "PowerPoint",
+                d: "Excel" }, "a");
+        addQ(305, "Which of the following is an audio file extension?", { a: ".png", b: ".docx", c: ".flac", d: ".pdf" },
+            "c");
+        addQ(306, "Which of the following is a popular platform for idea boards and visual inspiration?", { a: "Reddit",
+                b: "Pinterest", c: "LinkedIn", d: "Twitter" }, "b");
+        addQ(307, "What is the purpose of an antivirus software?", { a: "Speed up the computer", b: "Store cloud backups",
+                c: "Edit documents", d: "Detect and remove harmful software" }, "d");
+        addQ(308, "Which of the following is an image file extension?", { a: ".mp3", b: ".docx", c: ".png", d: ".exe" },
+            "c");
+        addQ(309, "What is the purpose of a router?", { a: "Store files", b: "Edit documents", c: "Compress data",
+                d: "Direct data traffic between networks" }, "d");
+        addQ(310, "Which Excel function counts the number of non-empty cells?", { a: "SUM", b: "MIN", c: "COUNTA",
+                d: "AVERAGE" }, "c");
+        addQ(311, "What does one Petabyte equal?", { a: "1024 Gigabytes", b: "1024 Terabytes", c: "1024 Megabytes",
+                d: "1024 Kilobytes" }, "b");
+        addQ(312, "What is the decimal equivalent of the hexadecimal number 64?", { a: "96", b: "100", c: "101",
+                d: "99" }, "b");
+        addQ(313, "Which of the following is a video file extension?", { a: ".pdf", b: ".png", c: ".xlsx", d: ".mkv" },
+            "d");
+        addQ(314, "Which key is used to move the cursor to the beginning of a line?", { a: "Home", b: "F5", c: "End",
+                d: "F12" }, "a");
+        addQ(315, "Which of the following is a video conferencing tool commonly used for online classes?", { a: "WinRAR",
+                b: "Notepad", c: "Photoshop", d: "Zoom" }, "d");
+        addQ(316, "Which device is used to assign IP addresses automatically to devices on a network?", { a: "Switch",
+                b: "Hub", c: "Modem", d: "DHCP Server" }, "d");
+        addQ(317, "Which protocol is used to securely connect to a private network over the internet?", { a: "VPN Protocol (e.g., IPSec)",
+                b: "FTP", c: "SMTP", d: "HTTP" }, "a");
+        addQ(318, "Which of the following is a popular platform for microblogging and news updates?", { a: "LinkedIn",
+                b: "Pinterest", c: "Twitter (X)", d: "Snapchat" }, "c");
+        addQ(319, "Which of the following is a valid multicast IPv4 address?", { a: "224.0.0", b: "224.0.0.1",
+                c: "224.0.0.256", d: "999.0.0.1" }, "b");
+        addQ(320, "What is the binary equivalent of the decimal number 16?", { a: "10100", b: "01000", c: "10000",
+                d: "11000" }, "c");
+        addQ(321, "Which of the following is a popular learning management system (LMS)?", { a: "Blackboard",
+                b: "Photoshop", c: "Skype", d: "WordPad" }, "a");
+        addQ(322, "Which protocol is used for browsing websites on the internet?", { a: "FTP", b: "SMTP", c: "HTTP",
+                d: "POP3" }, "c");
+        addQ(323, "Which of the following is a plain text file extension?", { a: ".mp3", b: ".jpg", c: ".txt", d: ".exe" },
+            "c");
+        addQ(324, "Which of the following is a popular platform for language learning?", { a: "Duolingo", b: "Pinterest",
+                c: "Reddit", d: "LinkedIn" }, "a");
+        addQ(325, "Which of the following is a popular platform for live game streaming?", { a: "Instagram", b: "Twitch",
+                c: "LinkedIn", d: "Pinterest" }, "b");
+        addQ(326, "Which of the following is a volatile memory?", { a: "ROM", b: "RAM", c: "Flash Drive", d: "SSD" },
+            "b");
+        addQ(327, "Which Excel function is used to round a number to a specified number of digits?", { a: "ROUND", b: "ABS",
+                c: "TRUNC", d: "INT" }, "a");
+        addQ(328, "What is the purpose of a backup?", { a: "Protect against viruses only", b: "Increase system speed",
+                c: "Display data faster", d: "Create a copy of data to prevent loss" }, "d");
+        addQ(329, "What is the binary equivalent of the hexadecimal number F?", { a: "1101", b: "1110", c: "1111",
+                d: "1100" }, "c");
+        addQ(330, "Which key is used to exit a program or cancel a current operation in many applications?", { a: "Esc",
+                b: "Ctrl", c: "Tab", d: "Enter" }, "a");
+        addQ(331, "How many bits make up one byte?", { a: "4", b: "16", c: "32", d: "8" }, "d");
+        addQ(332, "Which shortcut key is used to open File Explorer?", { a: "Windows + L", b: "Windows + R",
+                c: "Windows + D", d: "Windows + E" }, "d");
+        addQ(333, "What is the decimal equivalent of the binary number 10000?", { a: "15", b: "16", c: "18", d: "17" },
+            "b");
+        addQ(334, "What is the primary purpose of a Braille display?", { a: "Store files", b: "Process data",
+                c: "Output text in tactile form for visually impaired users", d: "Input data" }, "c");
+        addQ(335, "Which protocol is used for transferring hypertext files securely over encrypted connections?",
+            { a: "FTP", b: "SMTP", c: "HTTPS", d: "POP3" }, "c");
+        addQ(336, "What is the hexadecimal equivalent of the binary number 1010?", { a: "9", b: "A", c: "B", d: "C" },
+            "b");
+        addQ(337, "What is the purpose of a device driver?", { a: "Allow the operating system to communicate with hardware devices",
+                b: "Edit documents", c: "Store files permanently", d: "Browse the internet" }, "a");
+        addQ(338, "What is the hexadecimal equivalent of the decimal number 100?", { a: "74", b: "64", c: "63", d: "65" },
+            "b");
+        addQ(339, "Which of the following is an invalid IPv4 address due to a non-numeric character?", { a: "8.8.4.4",
+                b: "192.168.1.1", c: "10.0.0.1", d: "172.16.0.1" }, "d");
+        addQ(340, "Which key is typically used to start a slideshow in PowerPoint?", { a: "F12", b: "F1", c: "F5",
+                d: "F7" }, "c");
+        addQ(341, "Which of the following is a cloud-based photo storage and sharing service?", { a: "Notepad", b: "Paint",
+                c: "Google Photos", d: "WordPress" }, "c");
+        addQ(342, "Which of the following is a valid IPv4 address format?", { a: "Eight octets separated by periods",
+                b: "Six groups of hexadecimal digits separated by colons",
+                c: "Four octets separated by commas",
+                d: "Four octets separated by periods, each ranging from 0-255" }, "d");
+        addQ(343, "Which of the following is a cloud-based customer relationship management (CRM) platform?",
+            { a: "WordPress", b: "WinRAR", c: "Excel", d: "Salesforce" }, "d");
+        addQ(344, "Which key is used to open 'Save As' dialog box in Microsoft Word?", { a: "F10", b: "F12", c: "F5",
+                d: "F1" }, "b");
+        addQ(345, "Which Excel function calculates the median value of a set of numbers?", { a: "MODE", b: "SUM",
+                c: "MEDIAN", d: "AVERAGE" }, "c");
+        addQ(346, "Which of the following is a cloud computing service that provides on-demand computing power without managing servers directly?",
+            { a: "Notepad", b: "Paint", c: "Calculator", d: "Serverless Computing (e.g., AWS Lambda)" }, "d");
+        addQ(347, "Which Excel function adds up cells that meet a specific condition?", { a: "AVERAGEIF", b: "SUMIF",
+                c: "COUNT", d: "COUNTIF" }, "b");
+        addQ(348, "Which protocol is used to assign IP addresses automatically to devices on a network?", { a: "DHCP",
+                b: "POP3", c: "SMTP", d: "FTP" }, "a");
+        addQ(349, "Which Excel function calculates the average of cells that meet a specific condition?", { a: "COUNTIF",
+                b: "AVERAGEIF", c: "COUNT", d: "SUMIF" }, "b");
+        addQ(350, "Which key is used to take a screenshot of the entire screen on Windows?", { a: "Print Screen (PrtSc)",
+                b: "F5", c: "F10", d: "F1" }, "a");
+        addQ(351, "What does RAM stand for?", { a: "Random Access Memory", b: "Real Access Memory",
+                c: "Rapid Access Memory", d: "Read Access Memory" }, "a");
+        addQ(352, "What is the hexadecimal equivalent of the decimal number 255?", { a: "FF", b: "FE", c: "F0",
+                d: "100" }, "a");
+        addQ(353, "Which device broadcasts incoming data to all connected devices without filtering traffic?", { a: "Hub",
+                b: "Bridge", c: "Switch", d: "Router" }, "a");
+        addQ(354, "Which of the following is an example of a web browser?", { a: "UC Browser", b: "Adobe Illustrator",
+                c: "Windows Media Player", d: "Winamp" }, "a");
+        addQ(355, "Which Excel function counts the number of cells that meet a specific condition?", { a: "COUNTIF",
+                b: "AVERAGEIF", c: "SUMIF", d: "COUNT" }, "a");
+        addQ(356, "Which of the following is a popular platform for food delivery?", { a: "LinkedIn", b: "Pinterest",
+                c: "DoorDash", d: "Twitter" }, "c");
+        addQ(357, "Which of the following is a tool used for creating digital presentations for teaching?", { a: "WinRAR",
+                b: "Winamp", c: "Notepad", d: "Google Slides" }, "d");
+        addQ(358, "Which Excel function returns the absolute value of a number?", { a: "INT", b: "SQRT", c: "ROUND",
+                d: "ABS" }, "d");
+        addQ(359, "Which of the following correctly represents a valid subnet mask?", { a: "255.255.255.0",
+                b: "255.255.999.0", c: "255.255.255", d: "255.255.255.256" }, "a");
+        addQ(360, "Which of the following is an example of a programming language?", { a: "Firefox", b: "WordPad",
+                c: "Windows 8", d: "Objective-C" }, "d");
+        addQ(361, "Which device is used to protect a network by monitoring and controlling incoming and outgoing traffic based on security rules?",
+            { a: "Router", b: "Modem", c: "Firewall", d: "Switch" }, "c");
+        addQ(362, "Which Excel function calculates the average of a range of numbers?", { a: "SUM", b: "MAX", c: "AVERAGE",
+                d: "COUNT" }, "c");
+        addQ(363, "Which of the following is an example of a scripting language used for web development?", { a: "Photoshop",
+                b: "Notepad", c: "Windows Explorer", d: "JavaScript" }, "d");
+        addQ(364, "Which Excel function checks whether a cell contains an error?", { a: "ISERROR", b: "IF", c: "NOT",
+                d: "IERROR" }, "a");
+        addQ(365, "What is the decimal equivalent of the binary number 1100?", { a: "11", b: "10", c: "12", d: "13" },
+            "c");
+        addQ(366, "Which Excel function is used to look up a value in a table by matching a column?", { a: "INDEX",
+                b: "VLOOKUP", c: "HLOOKUP", d: "MATCH" }, "b");
+        addQ(367, "What is the binary equivalent of the decimal number 2?", { a: "10", b: "01", c: "100", d: "11" },
+            "a");
+        addQ(368, "Which of the following is an example of a programming language?", { a: "Outlook", b: "Windows Server",
+                c: "Excel", d: "COBOL" }, "d");
+        addQ(369, "What is the decimal equivalent of the hexadecimal number 40?", { a: "60", b: "64", c: "63", d: "65" },
+            "b");
+        addQ(370, "Which Excel function reverses the logical value of its argument?", { a: "IF", b: "OR", c: "AND",
+                d: "NOT" }, "d");
+        addQ(371, "What does Wi-Fi commonly stand for?", { a: "Wide Frequency", b: "Wireless Fidelity",
+                c: "It is not technically an acronym, but commonly interpreted as Wireless Fidelity",
+                d: "Wireless Frequency" }, "c");
+        addQ(372, "What is the binary equivalent of the decimal number 13?", { a: "1100", b: "1110", c: "1011",
+                d: "1101" }, "d");
+        addQ(373, "What is the primary purpose of a hard disk drive?", { a: "Input data", b: "Display output",
+                c: "Process instructions", d: "Store data permanently" }, "d");
+        addQ(374, "What is the purpose of a search engine?", { a: "Compress files", b: "Store files",
+                c: "Help users find information on the internet", d: "Edit documents" }, "c");
+        addQ(375, "Which Excel function finds the largest value in a range?", { a: "COUNT", b: "SUM", c: "MAX",
+                d: "MIN" }, "c");
+        addQ(376, "Which of the following is a cloud-based password management service?", { a: "Calculator", b: "WordPad",
+                c: "LastPass", d: "Paint" }, "c");
+        addQ(377, "Which device is used to connect multiple computers within a single LAN and forward data only to the intended recipient?",
+            { a: "Repeater", b: "Switch", c: "Hub", d: "Modem" }, "b");
+        addQ(378, "What is the primary purpose of a keyboard?", { a: "Display output", b: "Process data", c: "Input data",
+                d: "Store files" }, "c");
+        addQ(379, "Which of the following is a popular video conferencing application?", { a: "Instagram", b: "Snapchat",
+                c: "Zoom", d: "Pinterest" }, "c");
+        addQ(380, "Which of the following is a popular platform for music streaming?", { a: "Spotify", b: "Reddit",
+                c: "Pinterest", d: "LinkedIn" }, "a");
+        addQ(381, "What is the decimal equivalent of the hexadecimal number 14?", { a: "19", b: "21", c: "24", d: "20" },
+            "d");
+        addQ(382, "Which of the following is a popular learning management system (LMS)?", { a: "Canvas", b: "Excel",
+                c: "Notepad", d: "VLC Media Player" }, "a");
+        addQ(383, "What is the purpose of a screen recorder?", { a: "Edit spreadsheets", b: "Browse the internet",
+                c: "Capture video of on-screen activity", d: "Store cloud backups" }, "c");
+        addQ(384, "Which of the following is an example of a low-level programming language?", { a: "Python",
+                b: "Assembly Language", c: "HTML", d: "JavaScript" }, "b");
+        addQ(385, "Which of the following is an example of a programming language?", { a: "Windows", b: "Python",
+                c: "Microsoft Edge", d: "HTML" }, "b");
+        addQ(386, "Which key is used to open Developer Tools in most web browsers?", { a: "F5", b: "F10", c: "F12",
+                d: "F1" }, "c");
+        addQ(387, "Which of the following is a cloud storage service?", { a: "Adobe Photoshop", b: "Paint",
+                c: "Windows Media Player", d: "Google Drive" }, "d");
+        addQ(388, "What is the decimal equivalent of the hexadecimal number 32?", { a: "50", b: "49", c: "51", d: "48" },
+            "a");
+        addQ(389, "Which key is used to lock or unlock the numeric keypad on a keyboard?", { a: "F1", b: "Num Lock",
+                c: "F10", d: "F5" }, "b");
+        addQ(390, "Which device is used to boost a weak Wi-Fi signal throughout a building?", { a: "Modem", b: "Hub",
+                c: "Switch", d: "Wi-Fi Extender/Repeater" }, "d");
+        addQ(391, "What is the decimal equivalent of the binary number 1001?", { a: "8", b: "11", c: "10", d: "9" },
+            "d");
+        addQ(392, "What does VPN stand for?", { a: "Virtual Private Network", b: "Virtual Protected Network",
+                c: "Virtual Public Network", d: "Verified Private Network" }, "a");
+        addQ(393, "Which of the following is a cloud-based service for sending and managing marketing emails?",
+            { a: "Mailchimp", b: "Calculator", c: "WordPad", d: "Paint" }, "a");
+        addQ(394, "Which Excel function calculates the number of days, months, or years between two dates?", { a: "NOW",
+                b: "TODAY", c: "DATEDIF", d: "DATE" }, "c");
+        addQ(395, "What is the smallest addressable unit of memory in most computer systems?", { a: "Bit", b: "Byte",
+                c: "Word", d: "Kilobyte" }, "b");
+        addQ(396, "Which protocol allows users to view emails on a server without downloading them permanently?",
+            { a: "HTTP", b: "IMAP", c: "FTP", d: "SMTP" }, "b");
+        addQ(397, "Which of the following is a spreadsheet file extension?", { a: ".png", b: ".mp3", c: ".xlsx",
+                d: ".exe" }, "c");
+        addQ(398, "Which of the following is an audio file extension?", { a: ".mp3", b: ".docx", c: ".jpg", d: ".exe" },
+            "a");
+        addQ(399, "What is the decimal equivalent of the binary number 11111111?", { a: "255", b: "128", c: "254",
+                d: "256" }, "a");
+        addQ(400, "What is the octal equivalent of the decimal number 255?", { a: "376", b: "370", c: "377", d: "378" },
+            "c");
+        addQ(401, "Which key is commonly used to open the Help menu in most applications?", { a: "F12", b: "F5", c: "F10",
+                d: "F1" }, "d");
+        addQ(402, "What does IoT stand for?", { a: "Internet of Technology", b: "Internet of Things",
+                c: "Internet on Things", d: "Interconnect of Things" }, "b");
+        addQ(403, "Which key scrolls the screen up by one page?", { a: "Page Up", b: "Home", c: "End", d: "F5" }, "a");
+        addQ(404, "Which of the following is a popular online dating app?", { a: "Reddit", b: "LinkedIn", c: "Tinder",
+                d: "Pinterest" }, "c");
+        addQ(405, "What is the hexadecimal equivalent of the decimal number 32?", { a: "21", b: "30", c: "20", d: "1F" },
+            "c");
+        addQ(406, "Which of these best defines a 'character' in computing terms?", { a: "A unit of storage larger than a byte",
+                b: "A unit of speed", c: "A type of processor",
+                d: "A letter, number, or symbol represented digitally" }, "d");
+        addQ(407, "Which protocol is commonly used for accessing and managing directory information services?", { a: "HTTP",
+                b: "LDAP", c: "SMTP", d: "FTP" }, "b");
+        addQ(408, "Which Excel function combines text and numbers with specific formatting?", { a: "LEFT", b: "CONCATENATE",
+                c: "TEXT", d: "MID" }, "c");
+        addQ(409, "Which of the following is a type of non-volatile flash-based storage?", { a: "SSD", b: "Cache Memory",
+                c: "Register", d: "RAM" }, "a");
+        addQ(410, "Which of the following is an example of a web browser?", { a: "WordPad", b: "VLC Media Player",
+                c: "Photoshop", d: "Epic Browser" }, "d");
+        addQ(411, "Which device amplifies or regenerates a signal to extend the range of a network?", { a: "Repeater",
+                b: "Modem", c: "Switch", d: "Router" }, "a");
+        addQ(412, "Which Excel function performs a lookup that can search in any direction (rows or columns) and is a modern replacement for VLOOKUP/HLOOKUP?",
+            { a: "INDEX", b: "VLOOKUP", c: "XLOOKUP", d: "HLOOKUP" }, "c");
+        addQ(413, "Which of the following is a video conferencing tool commonly used for online classes?", { a: "Paint",
+                b: "Google Meet", c: "Excel", d: "WordPad" }, "b");
+        addQ(414, "What is the binary equivalent of the decimal number 14?", { a: "1100", b: "1110", c: "1111",
+                d: "1101" }, "b");
+        addQ(415, "Which of the following is a popular file-sharing and collaboration platform by Google?", { a: "Instagram",
+                b: "Pinterest", c: "Google Drive", d: "Reddit" }, "c");
+        addQ(416, "Which device is used to divide a large network into smaller segments while filtering traffic based on MAC addresses?",
+            { a: "Bridge", b: "Hub", c: "Modem", d: "Router" }, "a");
+        addQ(417, "Which of the following is an example of a web browser?", { a: "PowerPoint", b: "iTunes", c: "Opera",
+                d: "CorelDRAW" }, "c");
+        addQ(418, "What is the decimal equivalent of the binary number 1111?", { a: "13", b: "14", c: "15", d: "16" },
+            "c");
+        addQ(419, "What is the purpose of an operating system?", { a: "Edit photos",
+                b: "Manage hardware and software resources of a computer", c: "Store backup files",
+                d: "Browse the internet" }, "b");
+        addQ(420, "What is the binary equivalent of the decimal number 20?", { a: "10101", b: "11000", c: "10100",
+                d: "10010" }, "c");
+        addQ(421, "What is the purpose of Windows Update or software updates in general?", { a: "Speed up typing",
+                b: "Fix bugs and patch security vulnerabilities", c: "Increase advertisement display",
+                d: "Reduce file size" }, "b");
+        addQ(422, "Which of the following is a video file extension?", { a: ".avi", b: ".pdf", c: ".txt", d: ".png" },
+            "a");
+        addQ(423, "Which of the following is an example of a web browser?", { a: "PowerPoint", b: "Paint", c: "WinZip",
+                d: "Vivaldi" }, "d");
+        addQ(424, "Which of the following storage devices uses magnetic technology to store data?", { a: "Hard Disk Drive (HDD)",
+                b: "RAM", c: "Flash Drive", d: "SSD" }, "a");
+        addQ(425, "What is the decimal equivalent of the hexadecimal number FF?", { a: "250", b: "254", c: "256",
+                d: "255" }, "d");
+        addQ(426, "Which of the following represents 1024 megabytes?", { a: "Kilobyte", b: "Byte", c: "Terabyte",
+                d: "Gigabyte" }, "d");
+        addQ(427, "What is the term for 1024 bytes?", { a: "Terabyte", b: "Gigabyte", c: "Kilobyte", d: "Bit" }, "c");
+        addQ(428, "What is the primary purpose of a joystick?", { a: "Display output", b: "Store data", c: "Print documents",
+                d: "Input control signals for gaming or simulation" }, "d");
+        addQ(429, "Which of the following is an example of a programming language?", { a: "Photoshop", b: "Lua",
+                c: "Debian Linux", d: "WordPad" }, "b");
+        addQ(430, "Which protocol handles the delivery of network packets from the source host to the destination host based on IP addresses?",
+            { a: "IP", b: "FTP", c: "HTTP", d: "TCP" }, "a");
+        addQ(431, "What is the decimal equivalent of the binary number 1000000?", { a: "63", b: "65", c: "32", d: "64" },
+            "d");
+        addQ(432, "Which key opens the Bookmarks menu in most browsers?", { a: "F10", b: "F1", c: "Ctrl+B", d: "F12" },
+            "c");
+        addQ(433, "What is the octal equivalent of the decimal number 10?", { a: "13", b: "11", c: "12", d: "10" }, "c");
+        addQ(434, "Which of the following is a popular platform for online courses and learning?", { a: "Coursera",
+                b: "Snapchat", c: "Reddit", d: "Pinterest" }, "a");
+        addQ(435, "Which of the following is a cloud-based platform used for online meetings and webinars?", { a: "WinRAR",
+                b: "Paint", c: "Microsoft Teams", d: "Notepad" }, "c");
+        addQ(436, "What is the decimal equivalent of the hexadecimal number C8?", { a: "199", b: "200", c: "198",
+                d: "201" }, "b");
+        addQ(437, "Which of the following is a popular platform for hosting webinars?", { a: "GoToWebinar", b: "Instagram",
+                c: "Pinterest", d: "Reddit" }, "a");
+        addQ(438, "What does CSS stand for?", { a: "Cascading System Sheets", b: "Creative Style System",
+                c: "Computer Style Sheets", d: "Cascading Style Sheets" }, "d");
+        addQ(439, "Which of the following is a popular app for grocery delivery?", { a: "LinkedIn", b: "Reddit",
+                c: "Instacart", d: "Pinterest" }, "c");
+        addQ(440, "What is the decimal equivalent of the octal number 144?", { a: "102", b: "100", c: "101", d: "99" },
+            "b");
+        addQ(441, "Which Excel function returns the value of a cell at the intersection of a specific row and column?",
+            { a: "MATCH", b: "INDEX", c: "VLOOKUP", d: "HLOOKUP" }, "b");
+        addQ(442, "Which key increases the zoom level in a web browser?", { a: "F1", b: "Ctrl+Plus (+)", c: "F12",
+                d: "F10" }, "b");
+        addQ(443, "What does MAC address stand for?", { a: "Media Address Code", b: "Machine Address Control",
+                c: "Media Access Control", d: "Machine Access Code" }, "c");
+        addQ(444, "What is the decimal equivalent of the hexadecimal number 1F?", { a: "30", b: "29", c: "32", d: "31" },
+            "d");
+        addQ(445, "Which of the following is a video file extension?", { a: ".wmv", b: ".png", c: ".doc", d: ".txt" },
+            "a");
+        addQ(446, "What is the decimal equivalent of the binary number 111?", { a: "6", b: "8", c: "5", d: "7" }, "d");
+        addQ(447, "Which shortcut key is used to save a document?", { a: "Ctrl+S", b: "Ctrl+O", c: "Ctrl+P",
+                d: "Ctrl+N" }, "a");
+        addQ(448, "What does CPU stand for?", { a: "Computer Personal Unit", b: "Central Program Unit",
+                c: "Control Processing Unit", d: "Central Processing Unit" }, "d");
+        addQ(449, "Which of the following is a plagiarism detection tool commonly used in academic institutions?",
+            { a: "Paint", b: "Turnitin", c: "WordPad", d: "VLC" }, "b");
+        addQ(450, "Which protocol is used for transferring files between computers over a network?", { a: "SMTP", b: "FTP",
+                c: "POP3", d: "HTTP" }, "b");
+        addQ(451, "Which of the following is a popular platform for online payments and money transfers?", { a: "PayPal",
+                b: "Snapchat", c: "Reddit", d: "Pinterest" }, "a");
+        addQ(452, "What is the decimal equivalent of the binary number 11111?", { a: "30", b: "32", c: "31", d: "29" },
+            "c");
+        addQ(453, "What is the primary purpose of a motherboard?", { a: "Connect and allow communication between hardware components",
+                b: "Store files permanently", c: "Display output", d: "Input data" }, "a");
+        addQ(454, "Which Excel function returns the current date?", { a: "NOW", b: "DATE", c: "TODAY", d: "TIME" },
+            "c");
+        addQ(455, "What is the purpose of a password?", { a: "Speed up login", b: "Restrict access to authorized users only",
+                c: "Display system information", d: "Store user data" }, "b");
+        addQ(456, "What is the hexadecimal equivalent of the binary number 1111?", { a: "D", b: "10", c: "F", d: "E" },
+            "c");
+        addQ(457, "Which device connects two different types of networks, such as a LAN and the internet, translating protocols between them?",
+            { a: "Switch", b: "Hub", c: "Modem", d: "Gateway" }, "d");
+        addQ(458, "Which Excel function returns the number of working days between two dates?", { a: "TODAY", b: "DATE",
+                c: "DATEDIF", d: "NETWORKDAYS" }, "d");
+        addQ(459, "Which protocol is used for secure remote login to another computer over a network?", { a: "FTP",
+                b: "SMTP", c: "SSH", d: "HTTP" }, "c");
+        addQ(460, "Which Excel function counts the number of cells containing numbers?", { a: "MAX", b: "COUNT", c: "SUM",
+                d: "AVERAGE" }, "b");
+        addQ(461, "Which device combines the functions of a router, switch, and modem into a single unit?", { a: "Repeater",
+                b: "Gateway Combo Device", c: "Bridge", d: "Hub" }, "b");
+        addQ(462, "Which device translates a domain name into an IP address for internet browsing?", { a: "Router",
+                b: "DNS Server", c: "Switch", d: "Modem" }, "b");
+        addQ(463, "Which of the following is a video file extension?", { a: ".jpg", b: ".mp4", c: ".docx", d: ".exe" },
+            "b");
+        addQ(464, "Which key is used to move between open tabs in a web browser?", { a: "F12", b: "F1", c: "Ctrl+Tab",
+                d: "F5" }, "c");
+        addQ(465, "Which unit measures the refresh rate of a monitor?", { a: "Bytes per second", b: "Pixels", c: "Bits",
+                d: "Hertz (Hz)" }, "d");
+        addQ(466, "Which of the following is an example of a web browser?", { a: "Lunascape", b: "WinRAR", c: "Notepad",
+                d: "Skype" }, "a");
+        addQ(467, "What is the standard unit used to measure screen resolution?", { a: "Bytes", b: "Pixels", c: "Bits",
+                d: "Hertz" }, "b");
+        addQ(468, "Which shortcut key is used to refresh the current window or webpage?", { a: "F1", b: "F2", c: "F5",
+                d: "F4" }, "c");
+        addQ(469, "Which Excel function calculates the most frequently occurring value in a data set?", { a: "SUM",
+                b: "MEDIAN", c: "MODE", d: "AVERAGE" }, "c");
+        addQ(470, "What is the purpose of a spreadsheet program?", { a: "Edit videos", b: "Browse the internet",
+                c: "Organize and calculate data in rows and columns", d: "Manage network devices" }, "c");
+        addQ(471, "Which key is used to toggle full-screen mode in most web browsers?", { a: "F12", b: "F11", c: "F5",
+                d: "F1" }, "b");
+        addQ(472, "Which of the following is a cloud computing service provided by Microsoft?", { a: "Microsoft Azure",
+                b: "Excel", c: "WordPad", d: "Paint" }, "a");
+        addQ(473, "What is the octal equivalent of the decimal number 9?", { a: "9", b: "12", c: "11", d: "10" }, "c");
+        addQ(474, "Which of the following is an example of a web browser?", { a: "Tor Browser", b: "Access", c: "Word",
+                d: "VLC" }, "a");
+        addQ(475, "What is the octal equivalent of the decimal number 100?", { a: "140", b: "143", c: "145", d: "144" },
+            "d");
+        addQ(476, "Which of the following is an example of primary memory?", { a: "Hard Disk", b: "USB Drive",
+                c: "Optical Disc", d: "RAM" }, "d");
+        addQ(477, "Which of the following is a database file extension?", { a: ".mdb", b: ".txt", c: ".mp4", d: ".png" },
+            "a");
+        addQ(478, "Which of the following is an example of a web browser?", { a: "Windows Explorer", b: "Google Chrome",
+                c: "Microsoft Word", d: "Adobe Photoshop" }, "b");
+        addQ(479, "What is the decimal equivalent of the binary number 101?", { a: "5", b: "4", c: "6", d: "7" }, "a");
+        addQ(480, "What is the hexadecimal equivalent of the decimal number 64?", { a: "40", b: "3F", c: "41", d: "64" },
+            "a");
+        addQ(481, "Which key is used to lock a Windows computer quickly?", { a: "F5", b: "Windows+L", c: "F10",
+                d: "F1" }, "b");
+        addQ(482, "Which Excel function converts text to all lowercase letters?", { a: "LOWER", b: "TRIM", c: "PROPER",
+                d: "UPPER" }, "a");
+        addQ(483, "What is the octal equivalent of the decimal number 20?", { a: "23", b: "24", c: "25", d: "22" }, "b");
+        addQ(484, "What does URL stand for?", { a: "Uniform Reference Locator", b: "Universal Reference Link",
+                c: "Uniform Resource Locator", d: "United Resource Link" }, "c");
+        addQ(485, "Which of the following is a valid IPv4 address representing 'all zeros'?", { a: "0.0.0.0",
+                b: "0.0.0.1", c: "0.0.0.256", d: "0.0.0" }, "a");
+        addQ(486, "Which of the following is a cloud computing service used for hosting websites and applications?",
+            { a: "Notepad", b: "Photoshop", c: "Calculator", d: "Heroku" }, "d");
+        addQ(487, "What is the primary purpose of a router?", { a: "Direct data traffic between networks",
+                b: "Print documents", c: "Store data", d: "Display output" }, "a");
+        addQ(488, "What does JPEG stand for?", { a: "Joint Print Expert Group", b: "Joint Photo Encoding Group",
+                c: "Joint Photographic Experts Group", d: "Java Picture Expert Group" }, "c");
+        addQ(489, "Which of the following is an image file extension?", { a: ".mp3", b: ".zip", c: ".exe", d: ".bmp" },
+            "d");
+        addQ(490, "Which of the following is a valid Class A IPv4 address?", { a: "10.20.30.40", b: "10.20.30.400",
+                c: "300.20.30.40", d: "10.20.30" }, "a");
+        addQ(491, "Which of the following is a popular platform for disappearing photo and video messages?", { a: "Instagram",
+                b: "LinkedIn", c: "Snapchat", d: "Reddit" }, "c");
+        addQ(492, "What is the purpose of a web browser?", { a: "Compress data", b: "Edit spreadsheets",
+                c: "Store files locally", d: "Access and view websites on the internet" }, "d");
+        addQ(493, "Which shortcut key is used to take a screenshot on Windows?", { a: "Windows + P", b: "Ctrl + Shift + S",
+                c: "Print Screen (PrtSc)", d: "Alt + PrtSc" }, "c");
+        addQ(494, "Which of the following is a popular social media platform for short-form videos?", { a: "Reddit",
+                b: "LinkedIn", c: "TikTok", d: "Twitter" }, "c");
+        addQ(495, "Which key is used to check spelling and grammar in Microsoft Word?", { a: "F5", b: "F7", c: "F10",
+                d: "F1" }, "b");
+        addQ(496, "What is the primary purpose of a CPU?", { a: "Input data", b: "Display output", c: "Process data",
+                d: "Store files" }, "c");
+        addQ(497, "Which key is used to refresh a webpage?", { a: "F10", b: "F12", c: "F1", d: "F5" }, "d");
+        addQ(498, "Which protocol is responsible for routing data packets across different networks?", { a: "IP (Internet Protocol)",
+                b: "FTP", c: "HTTP", d: "SMTP" }, "a");
+        addQ(499, "What does IP stand for (in IP address)?", { a: "Internet Provider", b: "Interconnect Protocol",
+                c: "Internet Protocol", d: "Internal Protocol" }, "c");
+        addQ(500, "What is the binary equivalent of the decimal number 32?", { a: "110000", b: "100001", c: "011111",
+                d: "100000" }, "d");
+        addQ(501, "Which protocol is used for real-time voice and video communication over the internet?", { a: "SMTP",
+                b: "VoIP", c: "POP3", d: "FTP" }, "b");
+        addQ(502, "Which of the following is a valid public DNS server IPv4 address?", { a: "8.8.8.8",
+                b: "999.999.999.999", c: "10.0.0.0.1", d: "192.168.1.256" }, "a");
+        addQ(503, "Which shortcut key is used to redo an action?", { a: "Ctrl + Y", b: "Ctrl + C", c: "Ctrl + X",
+                d: "Ctrl + Z" }, "a");
+        addQ(504, "Which of the following is a popular platform for streaming live news?", { a: "Reddit", b: "CNN app",
+                c: "Snapchat", d: "Pinterest" }, "b");
+        addQ(505, "Which key is used to enter Safe Mode when restarting a Windows computer?", { a: "F8", b: "F5",
+                c: "F10", d: "F12" }, "a");
+        addQ(506, "Which of the following is a popular platform for online video editing?", { a: "Pinterest", b: "CapCut",
+                c: "Reddit", d: "LinkedIn" }, "b");
+        addQ(507, "Which key mutes/unmutes the current browser tab in some browsers?", { a: "F1", b: "F12", c: "F5",
+                d: "Ctrl+M" }, "d");
+        addQ(508, "Which of the following is an example of a web browser?", { a: "VLC Media Player", b: "Mozilla Firefox",
+                c: "Adobe Reader", d: "Microsoft Excel" }, "b");
+        addQ(509, "Which of the following is an example of a programming language?", { a: "Excel", b: "Windows 7",
+                c: "Notepad", d: "Assembly Language" }, "d");
+        addQ(510, "What is the binary equivalent of the decimal number 9?", { a: "1010", b: "0110", c: "1000",
+                d: "1001" }, "d");
+        addQ(511, "Which of the following is an example of a programming language?", { a: "TypeScript", b: "Ubuntu",
+                c: "Microsoft Teams", d: "Paint" }, "a");
+        addQ(512, "What is the binary equivalent of the decimal number 6?", { a: "100", b: "111", c: "110", d: "101" },
+            "c");
+        addQ(513, "Which of the following is a platform that provides free educational videos and practice exercises?",
+            { a: "WinZip", b: "Paint", c: "Khan Academy", d: "Photoshop" }, "c");
+        addQ(514, "What is the octal equivalent of the decimal number 15?", { a: "16", b: "18", c: "17", d: "15" }, "c");
+        addQ(515, "What is the decimal equivalent of the octal number 20?", { a: "15", b: "18", c: "17", d: "16" }, "d");
+        addQ(516, "What is the base numbering system used internally by computers?", { a: "Binary", b: "Octal",
+                c: "Decimal", d: "Hexadecimal" }, "a");
+        addQ(517, "Which of the following is an example of a web browser?", { a: "DuckDuckGo Browser", b: "Word",
+                c: "Excel", d: "Outlook" }, "a");
+        addQ(518, "Which protocol is used to remotely access and manage files on a web server, often used by developers?",
+            { a: "FTP", b: "HTTP", c: "POP3", d: "SMTP" }, "a");
+        addQ(519, "Which key is used to open a new tab in most web browsers?", { a: "Ctrl+T", b: "F5", c: "F10",
+                d: "F1" }, "a");
+        addQ(520, "Which Excel function checks if at least one given condition is true?", { a: "AND", b: "IF", c: "NOT",
+                d: "OR" }, "d");
+        addQ(521, "Which Excel function combines separate year, month, and day values into a date?", { a: "TODAY",
+                b: "TIME", c: "DATE", d: "NOW" }, "c");
+        addQ(522, "What is the primary purpose of a touchpad?", { a: "Store data", b: "Input cursor movement and selection",
+                c: "Display output", d: "Print documents" }, "b");
+        addQ(523, "What is the octal equivalent of the decimal number 63?", { a: "70", b: "77", c: "78", d: "76" }, "b");
+        addQ(524, "What is the decimal equivalent of the octal number 7?", { a: "8", b: "9", c: "7", d: "6" }, "c");
+        addQ(525, "Which shortcut key is used to rename a selected file or folder?", { a: "F2", b: "Ctrl + N", c: "F5",
+                d: "F10" }, "a");
+        addQ(526, "Which of the following is the correct order from smallest to largest storage unit?", { a: "Megabyte, Kilobyte, Byte, Bit",
+                b: "Bit, Byte, Kilobyte, Megabyte", c: "Byte, Bit, Megabyte, Kilobyte",
+                d: "Kilobyte, Byte, Bit, Megabyte" }, "b");
+        addQ(527, "Which device is primarily used to manage and direct traffic between different subnets in a network?",
+            { a: "Router", b: "Repeater", c: "Hub", d: "Modem" }, "a");
+        addQ(528, "What does ISP stand for?", { a: "Internal Service Provider", b: "Internet Service Provider",
+                c: "Interconnect Service Provider", d: "Internet System Provider" }, "b");
+        addQ(529, "Which of the following is an invalid IPv4 address due to a negative number?", { a: "10.10.10.10",
+                b: "172.16.1.1", c: "8.8.8.8", d: "192.168.-1.1" }, "d");
+        addQ(530, "What is the binary equivalent of the decimal number 100?", { a: "1100100", b: "1010100", c: "1100101",
+                d: "1101000" }, "a");
+        addQ(531, "Which shortcut key is used to italicize selected text?", { a: "Ctrl + U", b: "Ctrl + I", c: "Ctrl + B",
+                d: "Ctrl + E" }, "b");
+        addQ(532, "What is the octal equivalent of the decimal number 16?", { a: "20", b: "17", c: "21", d: "22" }, "a");
+        addQ(533, "What is the binary equivalent of the decimal number 4?", { a: "110", b: "011", c: "100", d: "101" },
+            "c");
+        addQ(534, "Which Excel function returns a random number between 0 and 1?", { a: "RANDBETWEEN", b: "RAND", c: "ABS",
+                d: "ROUND" }, "b");
+        addQ(535, "What is the purpose of an email client?", { a: "Send, receive, and manage emails", b: "Compress data",
+                c: "Edit documents", d: "Store backups" }, "a");
+        addQ(536, "Which protocol is used to securely copy files between a local and remote host using SSH?", { a: "FTP",
+                b: "HTTP", c: "SMTP", d: "SCP" }, "d");
+        addQ(537, "Which protocol is a secure alternative to FTP for transferring files?", { a: "HTTP", b: "SFTP",
+                c: "SMTP", d: "POP3" }, "b");
+        addQ(538, "Which of the following is a tool used to create and share flashcards for studying?", { a: "WordPad",
+                b: "Paint", c: "VLC", d: "Quizlet" }, "d");
+        addQ(539, "What is the purpose of an antivirus program?", { a: "Increase computer speed",
+                b: "Detect and remove malicious software", c: "Store files permanently", d: "Manage network traffic" },
+            "b");
+        addQ(540, "Which shortcut key is used to switch between open applications?", { a: "Alt + Tab", b: "Windows + D",
+                c: "Ctrl + Shift + Esc", d: "Ctrl + Esc" }, "a");
+        addQ(541, "Which key is used to move focus to the next open window in some applications?", { a: "F5", b: "F12",
+                c: "Alt+Tab", d: "F1" }, "c");
+        addQ(542, "Which Excel function returns the number of rows in a reference or array?", { a: "COUNT", b: "LEN",
+                c: "ROWS", d: "COLUMNS" }, "c");
+        addQ(543, "What is the binary equivalent of the decimal number 5?", { a: "101", b: "111", c: "110", d: "100" },
+            "a");
+        addQ(544, "Which of the following is an example of a programming language?", { a: "Zoom", b: "Ubuntu", c: "PHP",
+                d: "Paint" }, "c");
+        addQ(545, "Which of the following is a popular platform for photo sharing?", { a: "Instagram", b: "Reddit",
+                c: "LinkedIn", d: "Twitter" }, "a");
+        addQ(546, "Which of the following is an example of a programming language?", { a: "Swift", b: "WinRAR",
+                c: "Android", d: "WordPad" }, "a");
+        addQ(547, "What is the primary purpose of an optical disc drive (CD/DVD drive)?", { a: "Input text",
+                b: "Read and/or write data on discs", c: "Display output", d: "Process instructions" }, "b");
+        addQ(548, "What is the purpose of a VPN (Virtual Private Network)?", { a: "Display websites faster",
+                b: "Store data in the cloud", c: "Provide a secure, private connection over a public network",
+                d: "Speed up downloads" }, "c");
+        addQ(549, "Which Excel function removes the decimal or fractional part of a number, rounding toward zero?",
+            { a: "INT", b: "ABS", c: "TRUNC", d: "ROUND" }, "c");
+        addQ(550, "Which of the following is a popular platform for online discussions and forums?", { a: "Pinterest",
+                b: "TikTok", c: "Reddit", d: "Instagram" }, "c");
+        addQ(551, "Which of the following is a video conferencing tool commonly used for online classes?", { a: "Notepad",
+                b: "WinZip", c: "Winamp", d: "Microsoft Teams" }, "d");
+        addQ(552, "Which of the following is an example of a programming language?", { a: "Windows 11", b: "Chrome",
+                c: "Paint", d: "Shell Scripting (Bash)" }, "d");
+        addQ(553, "What is the primary purpose of a scanner?", { a: "Process instructions", b: "Store data",
+                c: "Print documents", d: "Convert physical documents into digital form" }, "d");
+        addQ(554, "Which of the following is a popular ride-hailing service?", { a: "Pinterest", b: "LinkedIn", c: "Uber",
+                d: "Instagram" }, "c");
+        addQ(555, "Which of the following is an example of a programming language?", { a: "Photoshop", b: "Outlook",
+                c: "JavaScript", d: "Windows Media Player" }, "c");
+        addQ(556, "What is the purpose of two-factor authentication (2FA)?", { a: "Store backup passwords",
+                b: "Increase password length automatically", c: "Add an extra layer of security beyond just a password",
+                d: "Speed up the login process" }, "c");
+        addQ(557, "Which Excel function is used to perform conditional logic (if-then-else)?", { a: "IF", b: "NOT", c: "OR",
+                d: "AND" }, "a");
+        addQ(558, "Which key opens File Explorer directly in Windows?", { a: "F10", b: "Windows+E", c: "F12", d: "F1" },
+            "b");
+        addQ(559, "Which of the following memory types cannot be modified by the user under normal circumstances?",
+            { a: "Flash Memory", b: "RAM", c: "Cache", d: "ROM" }, "d");
+        addQ(560, "Which of the following is a Google-based tool used to manage assignments and classroom communication?",
+            { a: "Notepad", b: "Google Classroom", c: "Winamp", d: "Excel" }, "b");
+        addQ(561, "What is the decimal equivalent of the hexadecimal number 20?", { a: "32", b: "31", c: "33", d: "34" },
+            "a");
+        addQ(562, "Which of the following is the smallest and fastest type of memory, built directly into the CPU?",
+            { a: "ROM", b: "Cache", c: "RAM", d: "Register" }, "d");
+        addQ(563, "What is the primary purpose of a trackball?", { a: "Print documents", b: "Store data",
+                c: "Input cursor movement", d: "Display output" }, "c");
+        addQ(564, "What is the purpose of encryption?", { a: "Convert data into a secure, unreadable format to prevent unauthorized access",
+                b: "Backup data automatically", c: "Speed up data transfer", d: "Reduce file size" }, "a");
+        addQ(565, "Which of the following is an example of a programming language?", { a: "Firefox", b: "Linux", c: "C#",
+                d: "VLC Media Player" }, "c");
+        addQ(566, "Which of the following is a popular platform for online banking?", { a: "Pinterest", b: "Reddit",
+                c: "Instagram", d: "Chase Mobile" }, "d");
+        addQ(567, "Which Excel function is used to join two or more text strings into one?", { a: "RIGHT", b: "CONCATENATE",
+                c: "MID", d: "LEFT" }, "b");
+        addQ(568, "Which memory is the fastest and located closest to the CPU?", { a: "ROM", b: "RAM", c: "Cache Memory",
+                d: "Hard Disk" }, "c");
+        addQ(569, "Which Excel function finds the smallest value in a range?", { a: "AVERAGE", b: "MAX", c: "MIN",
+                d: "SUM" }, "c");
+        addQ(570, "Which key opens the Start Menu in Windows?", { a: "F5", b: "Windows Key", c: "F1", d: "F12" }, "b");
+        addQ(571, "What is the octal equivalent of the decimal number 7?", { a: "10", b: "6", c: "8", d: "7" }, "d");
+        addQ(572, "What is the hexadecimal equivalent of the decimal number 20?", { a: "14", b: "15", c: "13", d: "24" },
+            "a");
+        addQ(573, "What does CD-ROM stand for?", { a: "Compact Disc Random Output Memory",
+                b: "Compact Data Read-Only Memory", c: "Compact Disc Read-Only Memory",
+                d: "Compact Disc Rapid Output Memory" }, "c");
+        addQ(574, "Which of the following is a popular learning management system (LMS)?", { a: "Paint", b: "Schoology",
+                c: "Adobe Reader", d: "Winamp" }, "b");
+        addQ(575, "What does HTTPS stand for?", { a: "HyperText Transfer Protocol Secure",
+                b: "Host Transfer Text Protocol Secure", c: "High Transfer Protocol System",
+                d: "Hyper Terminal Transfer Protocol System" }, "a");
+        addQ(576, "Which of the following is a presentation file extension?", { a: ".mp4", b: ".exe", c: ".jpg",
+                d: ".pptx" }, "d");
+        addQ(577, "Which of the following is an example of a programming language?", { a: "Outlook", b: "iOS 17",
+                c: "Visual Basic", d: "WinRAR" }, "c");
+        addQ(578, "Which device is used to convert analog telephone signals into digital data for computer use?",
+            { a: "Gateway", b: "Switch", c: "Modem", d: "Router" }, "c");
+        addQ(579, "What is the primary purpose of a modem?", { a: "Store data", b: "Display output", c: "Print documents",
+                d: "Enable internet connectivity by converting signals" }, "d");
+        addQ(580, "Which of the following is an example of Infrastructure as a Service (IaaS)?", { a: "Notepad",
+                b: "Amazon EC2", c: "Photoshop", d: "Paint" }, "b");
+        addQ(581, "Which Excel function calculates the total of a range of numbers?", { a: "SUM", b: "MIN", c: "MAX",
+                d: "AVG" }, "a");
+        addQ(582, "Which of the following is a web page file extension?", { a: ".docx", b: ".exe", c: ".html",
+                d: ".mp4" }, "c");
+        addQ(583, "What is the decimal equivalent of the octal number 30?", { a: "26", b: "23", c: "24", d: "25" }, "c");
+        addQ(584, "What does HTTP stand for?", { a: "Hyper Terminal Protocol", b: "HyperText Transfer Protocol",
+                c: "High Transfer Text Protocol", d: "Host Text Transfer Protocol" }, "b");
+        addQ(585, "Which Excel function returns the relative position of a value in a range?", { a: "MATCH", b: "VLOOKUP",
+                c: "INDEX", d: "HLOOKUP" }, "a");
+        addQ(586, "Which numbering system uses digits 0-9 and letters A-F?", { a: "Hexadecimal", b: "Binary", c: "Octal",
+                d: "Decimal" }, "a");
+        addQ(587, "What is the decimal equivalent of the hexadecimal number 80?", { a: "120", b: "127", c: "129",
+                d: "128" }, "d");
+        addQ(588, "Which key combination is used to open Task Manager directly?", { a: "F10", b: "Ctrl+Shift+Esc",
+                c: "F1", d: "F5" }, "b");
+        addQ(589, "Which device is used to connect a Local Area Network (LAN) to a Wide Area Network (WAN)?", { a: "Switch",
+                b: "Router", c: "Hub", d: "Modem" }, "b");
+        addQ(590, "What is the purpose of a firewall?", { a: "Protect against unauthorized access", b: "Store backup data",
+                c: "Display web pages", d: "Enhance internet speed" }, "a");
+        addQ(591, "Which of the following is a popular platform for hosting and sharing podcasts?", { a: "LinkedIn",
+                b: "Pinterest", c: "Instagram", d: "Spotify Podcasts" }, "d");
+        addQ(592, "Which of the following is a popular platform for creating digital art and design?", { a: "Canva",
+                b: "LinkedIn", c: "Reddit", d: "Pinterest" }, "a");
+        addQ(593, "What does DNS stand for?", { a: "Data Name Server", b: "Domain Name System",
+                c: "Domain Network Server", d: "Data Network System" }, "b");
+        addQ(594, "Which Excel function checks if all given conditions are true?", { a: "AND", b: "OR", c: "IF",
+                d: "NOT" }, "a");
+        addQ(595, "What does PDF stand for?", { a: "Printable Document Format", b: "Personal Document File",
+                c: "Portable Document Format", d: "Portable Data File" }, "c");
+        addQ(596, "Which of the following is a digital whiteboard tool used in virtual classrooms?", { a: "Notepad",
+                b: "Winamp", c: "Jamboard", d: "WinRAR" }, "c");
+        addQ(597, "Which of the following is a popular video calling feature built into a messaging app?", { a: "Pinterest",
+                b: "LinkedIn", c: "FaceTime", d: "Reddit" }, "c");
+        addQ(598, "Which of the following is an example of a programming language?", { a: "Outlook", b: "Perl", c: "Winamp",
+                d: "Windows Vista" }, "b");
+        addQ(599, "Which shortcut key is used to open the address bar in a web browser directly?", { a: "Ctrl+N",
+                b: "Ctrl+L", c: "Ctrl+T", d: "Ctrl+W" }, "b");
+        addQ(600, "Which of the following is a platform used for creating and hosting online courses?", { a: "WordPad",
+                b: "Coursera", c: "WinRAR", d: "Photoshop" }, "b");
+        addQ(601, "Which of the following is a popular cloud storage service by Microsoft?", { a: "Instagram", b: "Pinterest",
+                c: "Reddit", d: "OneDrive" }, "d");
+        addQ(602, "Which of the following is a platform used for creating and hosting online courses?", { a: "VLC",
+                b: "Notepad", c: "Paint", d: "Udemy" }, "d");
+        addQ(603, "Which type of memory retains data even after the power is turned off?", { a: "Register", b: "Cache",
+                c: "RAM", d: "ROM" }, "d");
+        addQ(604, "Which of the following is an example of a web browser?", { a: "Outlook", b: "OneNote", c: "Brave",
+                d: "Access" }, "c");
+        addQ(605, "What is the purpose of a cookie in web browsing?", { a: "Encrypt user passwords",
+                b: "Store information about user preferences and browsing activity", c: "Protect against viruses",
+                d: "Speed up internet connection" }, "b");
+        addQ(606, "What is the decimal equivalent of the octal number 17?", { a: "14", b: "16", c: "13", d: "15" }, "d");
+        addQ(607, "Which key scrolls the screen down by one page?", { a: "Home", b: "F5", c: "End", d: "Page Down" },
+            "d");
+        addQ(608, "Which of the following is an example of a programming language?", { a: "Excel", b: "Linux Mint",
+                c: "MATLAB", d: "WinRAR" }, "c");
+        addQ(609, "What is the purpose of a word processor?", { a: "Create and edit text documents", b: "Store large files",
+                c: "Browse the internet", d: "Manage network settings" }, "a");
+        addQ(610, "Which of the following is a tool used for creating interactive quizzes for classrooms?", { a: "Skype",
+                b: "Photoshop", c: "Paint", d: "Quizizz" }, "d");
+        addQ(611, "Which of the following is a cloud-based streaming service for movies and TV shows?", { a: "Netflix",
+                b: "Windows Media Player", c: "Winamp", d: "VLC" }, "a");
+        addQ(612, "What is the binary equivalent of the hexadecimal number A?", { a: "1100", b: "1011", c: "1001",
+                d: "1010" }, "d");
+        addQ(613, "Which of the following is an example of a web browser?", { a: "Paint", b: "Sputnik Browser",
+                c: "WordPad", d: "Outlook" }, "b");
+        addQ(614, "What is the binary equivalent of the decimal number 31?", { a: "10111", b: "11101", c: "11111",
+                d: "11110" }, "c");
+        addQ(615, "Which of the following is an example of a programming language used for statistical computing?",
+            { a: "Outlook", b: "R", c: "Excel", d: "macOS" }, "b");
+        addQ(616, "Which of the following is an example of a programming language?", { a: "Rust", b: "Windows 10",
+                c: "Access", d: "Notepad" }, "a");
+        addQ(617, "What does SSD stand for?", { a: "Secure Storage Device", b: "System Storage Drive",
+                c: "Solid State Drive", d: "Solid Storage Device" }, "c");
+        addQ(618, "Which device is used to convert digital signals into analog signals for internet connectivity?",
+            { a: "Router", b: "Modem", c: "Hub", d: "Switch" }, "b");
+        addQ(619, "Which device is used to forward data packets between different computer networks?", { a: "Bridge",
+                b: "Modem", c: "Hub", d: "Router" }, "d");
+        addQ(620, "What is the purpose of a task manager in an operating system?", { a: "Store backup data",
+                b: "Browse the internet", c: "Edit files",
+                d: "Monitor and manage running processes and applications" }, "d");
+        addQ(621, "What is the decimal equivalent of the octal number 77?", { a: "65", b: "63", c: "62", d: "64" }, "b");
+        addQ(622, "What does USB stand for?", { a: "Universal Serial Bus", b: "Unified Serial Bus",
+                c: "United Serial Bus", d: "Universal System Bus" }, "a");
+        addQ(623, "What is the octal equivalent of the decimal number 64?", { a: "99", b: "101", c: "100", d: "110" },
+            "c");
+        addQ(624, "What does GIF stand for?", { a: "General Image Format", b: "Graphics Interchange Format",
+                c: "Graphic Image File", d: "Graphics Image File" }, "b");
+        addQ(625, "Which shortcut key is used to underline selected text?", { a: "Ctrl + U", b: "Ctrl + I", c: "Ctrl + E",
+                d: "Ctrl + B" }, "a");
+        addQ(626, "Which of the following is an example of a programming language?", { a: "macOS Sonoma", b: "Haskell",
+                c: "Notepad", d: "Skype" }, "b");
+        addQ(627, "Which protocol is used to synchronize time across computer systems on a network?", { a: "FTP", b: "SMTP",
+                c: "NTP", d: "HTTP" }, "c");
+        addQ(628, "What is the purpose of data encryption during online transactions?", { a: "Protect sensitive information such as card details from being intercepted",
+                b: "Reduce transaction fees", c: "Store transaction history", d: "Speed up the transaction" }, "a");
+        addQ(629, "Which of the following is an example of a web browser?", { a: "Notepad", b: "Comodo Dragon",
+                c: "Photoshop", d: "PowerPoint" }, "b");
+        addQ(630, "Which unit is used to measure the speed of a processor?", { a: "Bytes", b: "Bits", c: "Hertz (Hz)",
+                d: "Pixels" }, "c");
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  APPLICATION STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        let state = {
+            current: 0,
+            answers: {},
+            review: {},
+            submitted: false,
+            showDetails: false,
+        };
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  DOM REFS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const $ = id => document.getElementById(id);
+        const paletteEl = $('palette');
+        const qNumber = $('qNumber');
+        const qText = $('qText');
+        const optionsContainer = $('optionsContainer');
+        const feedback = $('feedback');
+        const prevBtn = $('prevBtn');
+        const nextBtn = $('nextBtn');
+        const reviewBtn = $('reviewBtn');
+        const submitBtn = $('submitBtn');
+        const resetBtn = $('resetBtn');
+        const progressText = $('progressText');
+        const resultsDiv = $('results');
+        const resultSummary = $('resultSummary');
+        const resultDetail = $('resultDetail');
+        const toggleDetailsBtn = $('toggleDetailsBtn');
+        const modeBadge = $('modeBadge');
+        const jumpInput = $('jumpInput');
+        const jumpBtn = $('jumpBtn');
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RENDER FUNCTIONS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function renderPalette() {
+            let html = '';
+            for (let i = 0; i < questions.length; i++) {
+                let cls = 'palette-btn';
+                if (state.answers[i] !== undefined) cls += ' answered';
+                if (state.review[i]) cls += ' review';
+                if (i === state.current) cls += ' active';
+                html += `<button class="${cls}" data-index="${i}">${i+1}</button>`;
+            }
+            html += `<div class="palette-legend">
+                <span><span class="legend-dot unanswered"></span> Unanswered</span>
+                <span><span class="legend-dot answered"></span> Answered</span>
+                <span><span class="legend-dot review"></span> Review</span>
+            </div>`;
+            paletteEl.innerHTML = html;
+
+            paletteEl.querySelectorAll('.palette-btn[data-index]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.index);
+                    if (!state.submitted) {
+                        state.current = idx;
+                        jumpInput.value = idx + 1;
+                        renderQuestion();
+                    }
+                });
+            });
+        }
+
+        function renderQuestion() {
+            const q = questions[state.current];
+            const idx = state.current;
+            qNumber.textContent = `Q${idx+1}.`;
+            qText.textContent = q.q;
+
+            const letters = ['a', 'b', 'c', 'd'];
+            let optHtml = '';
+            const selected = state.answers[idx];
+            const isSubmitted = state.submitted;
+            const correctAns = q.ans;
+
+            letters.forEach(letter => {
+                const label = q.opts[letter];
+                if (!label) return;
+                let cls = 'option';
+                if (selected === letter) cls += ' selected';
+                if (isSubmitted) {
+                    if (letter === correctAns) cls += ' correct';
+                    if (selected === letter && letter !== correctAns) cls += ' wrong';
+                }
+                const checked = selected === letter ? 'checked' : '';
+                const disabled = isSubmitted ? 'disabled' : '';
+                optHtml += `
+                    <label class="${cls}">
+                        <input type="radio" name="q${idx}" value="${letter}" ${checked} ${disabled} />
+                        <span class="label">${letter.toUpperCase()}.</span> ${label}
+                    </label>
+                `;
+            });
+            optionsContainer.innerHTML = optHtml;
+
+            if (!isSubmitted) {
+                optionsContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        const val = e.target.value;
+                        state.answers[idx] = val;
+                        if (state.review[idx]) delete state.review[idx];
+                        renderPalette();
+                        renderQuestion();
+                        showFeedback(idx);
+                    });
+                });
+            }
+
+            if (isSubmitted) {
+                const correct = state.answers[idx] === q.ans;
+                feedback.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+                feedback.textContent = correct ?
+                    '✅ Correct!' :
+                    `❌ Incorrect. Correct answer: ${q.ans.toUpperCase()}. ${q.opts[q.ans]}`;
+            } else {
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            }
+
+            progressText.textContent = `${idx+1} / ${questions.length}`;
+            reviewBtn.textContent = state.review[idx] ? '⭐ Unmark' : '⭐ Review';
+            reviewBtn.classList.toggle('active', !!state.review[idx]);
+            prevBtn.disabled = idx === 0;
+            nextBtn.disabled = idx === questions.length - 1;
+            jumpInput.value = idx + 1;
+        }
+
+        function showFeedback(idx) {
+            const q = questions[idx];
+            const selected = state.answers[idx];
+            if (!selected) {
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+                return;
+            }
+            const correct = selected === q.ans;
+            feedback.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+            feedback.textContent = correct ?
+                '✅ Correct!' :
+                `❌ Incorrect. Correct answer: ${q.ans.toUpperCase()}. ${q.opts[q.ans]}`;
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  NAVIGATION
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function goTo(index) {
+            if (index < 0 || index >= questions.length) return;
+            state.current = index;
+            renderQuestion();
+            renderPalette();
+        }
+
+        prevBtn.addEventListener('click', () => goTo(state.current - 1));
+        nextBtn.addEventListener('click', () => goTo(state.current + 1));
+
+        jumpBtn.addEventListener('click', () => {
+            let val = parseInt(jumpInput.value);
+            if (isNaN(val) || val < 1) val = 1;
+            if (val > questions.length) val = questions.length;
+            goTo(val - 1);
+        });
+
+        jumpInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') jumpBtn.click();
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  REVIEW
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        reviewBtn.addEventListener('click', () => {
+            if (state.submitted) return;
+            const idx = state.current;
+            if (state.review[idx]) {
+                delete state.review[idx];
+            } else {
+                state.review[idx] = true;
+            }
+            renderPalette();
+            renderQuestion();
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  SUBMIT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        submitBtn.addEventListener('click', function() {
+            if (state.submitted) return;
+
+            const total = questions.length;
+            const answered = Object.keys(state.answers).length;
+
+            let confirmMessage = '';
+            if (answered < total) {
+                confirmMessage =
+                    `You have answered ${answered} out of ${total} questions. ${total - answered} questions are unanswered.\n\nAre you sure you want to submit?`;
+            } else {
+                confirmMessage = 'You have answered all questions!\n\nSubmit your exam for grading?';
+            }
+
+            if (!confirm(confirmMessage)) return;
+
+            state.submitted = true;
+            submitBtn.style.display = 'none';
+            resetBtn.style.display = 'inline-flex';
+            modeBadge.textContent = '📊 Results';
+
+            renderQuestion();
+            renderPalette();
+            showResults();
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RESULTS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function showResults() {
+            let correct = 0;
+            let wrong = 0;
+            let unanswered = 0;
+            const details = [];
+
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const status = userAns === undefined ? 'unanswered' : (isCorrect ? 'correct' : 'wrong');
+                if (status === 'correct') correct++;
+                else if (status === 'wrong') wrong++;
+                else unanswered++;
+                details.push({
+                    index: i,
+                    q: q.q,
+                    userAns: userAns || '(not answered)',
+                    correctAns: q.ans,
+                    correct: isCorrect,
+                    status,
+                    isReview: !!state.review[i]
+                });
+            });
+
+            const total = questions.length;
+            const score = correct;
+            const percent = Math.round((score / total) * 100);
+
+            resultSummary.innerHTML = `
+                <h2>📊 Exam Results</h2>
+                <div class="score">${score} / ${total}</div>
+                <div class="sub">${percent}% &nbsp;|&nbsp; ✅ ${correct} Correct &nbsp;|&nbsp; ❌ ${wrong} Wrong &nbsp;|&nbsp; ⬜ ${unanswered} Unanswered</div>
+                ${percent >= 80 ? '<div style="margin-top:10px;font-size:20px;color:#2b6cb0;">🎉 Excellent! Great job!</div>' : 
+                  percent >= 60 ? '<div style="margin-top:10px;font-size:20px;color:#ed8936;">👍 Good effort! Keep practicing!</div>' : 
+                  '<div style="margin-top:10px;font-size:20px;color:#e53e3e;">📚 Review the material and try again!</div>'}
+            `;
+
+            let detailHtml = '';
+            details.forEach(d => {
+                const statusLabel = d.status === 'correct' ? '✅ Correct' :
+                    d.status === 'wrong' ? '❌ Wrong' : '⬜ Unanswered';
+                const reviewMark = d.isReview ? ' ⭐' : '';
+                detailHtml += `
+                    <div class="result-item">
+                        <span class="qid">Q${d.index+1}${reviewMark}</span>
+                        <span style="flex:1;padding:0 8px;font-size:12px;">${d.q.substring(0,50)}${d.q.length>50?'…':''}</span>
+                        <span style="font-size:11px;color:#4a5568;min-width:50px;">Your: ${d.userAns.toUpperCase()}</span>
+                        <span style="font-size:11px;color:#2b6cb0;font-weight:600;min-width:50px;">Correct: ${d.correctAns.toUpperCase()}</span>
+                        <span class="status ${d.status}">${statusLabel}</span>
+                    </div>
+                `;
+            });
+            resultDetail.innerHTML = detailHtml;
+
+            resultsDiv.classList.add('show');
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  TOGGLE DETAILS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        toggleDetailsBtn.addEventListener('click', () => {
+            state.showDetails = !state.showDetails;
+            resultDetail.style.display = state.showDetails ? 'block' : 'none';
+            toggleDetailsBtn.textContent = state.showDetails ? '📋 Hide Details' : '📋 Show Details';
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RESET
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        resetBtn.addEventListener('click', () => {
+            if (confirm('🔄 Reset the entire exam? All progress will be lost.')) {
+                state = {
+                    current: 0,
+                    answers: {},
+                    review: {},
+                    submitted: false,
+                    showDetails: false,
+                };
+                resultsDiv.classList.remove('show');
+                resultDetail.style.display = 'none';
+                resultDetail.innerHTML = '';
+                submitBtn.style.display = 'inline-flex';
+                resetBtn.style.display = 'none';
+                modeBadge.textContent = 'Learning Mode';
+                renderPalette();
+                renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  KEYBOARD SHORTCUTS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || state.submitted) return;
+            if (e.key === 'ArrowLeft') { e.preventDefault();
+                prevBtn.click(); } else if (e.key === 'ArrowRight') { e.preventDefault();
+                nextBtn.click(); } else if (e.key === 'r' || e.key === 'R') { e.preventDefault();
+                reviewBtn.click(); } else if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (state.current === questions.length - 1) submitBtn.click();
+                else nextBtn.click();
+            }
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  INIT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        renderPalette();
+        renderQuestion();
+
+        console.log('📘 BICTE Computer GK - 630 Practice Questions loaded!');
+        console.log(`📝 ${questions.length} questions available.`);
+        console.log('⌨️  Shortcuts: ← → navigate, R = review, Enter = next/submit');
+    </script>
+
+</body>
+</html>
